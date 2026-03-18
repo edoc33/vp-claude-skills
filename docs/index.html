@@ -123,6 +123,26 @@
   </select>
 </div>
 
+<div id="n8n-section" style="margin-bottom:24px;">
+  <h2 style="color:#0B51AE;font-size:18px;margin:24px 0 12px;">n8n Workflows</h2>
+  <div class="cards" id="n8n-cards"></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th>Workflow</th>
+        <th>Status</th>
+        <th>Runs (last 20)</th>
+        <th>Success Rate</th>
+        <th>Avg Duration</th>
+        <th>Last Run</th>
+      </tr></thead>
+      <tbody id="n8n-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<h2 style="color:#0B51AE;font-size:18px;margin:24px 0 12px;">Claude Skills</h2>
+
 <div class="table-wrap">
   <table>
     <thead><tr>
@@ -140,25 +160,25 @@
 
 <script id="data" type="application/json">
 {
-  "scan_date": "2026-03-17",
-  "total_skills": 77,
+  "scan_date": "2026-03-18",
+  "total_skills": 84,
   "tier_counts": {
     "active": 39,
     "recent": 0,
     "stale": 0,
-    "never": 38
+    "never": 45
   },
   "skills": [
     {
       "skill": "firecrawl",
       "category": "Infra",
-      "total_uses": 17,
+      "total_uses": 20,
       "slash_count": 0,
-      "mention_count": 17,
-      "interactive_count": 17,
+      "mention_count": 20,
+      "interactive_count": 20,
       "automated_count": 0,
       "artifact_count": 0,
-      "last_used": "2026-03-17",
+      "last_used": "2026-03-18",
       "channel": "interactive",
       "tier": "active"
     },
@@ -254,6 +274,19 @@
       "tier": "active"
     },
     {
+      "skill": "blog-quality-review",
+      "category": "Content",
+      "total_uses": 4,
+      "slash_count": 1,
+      "mention_count": 3,
+      "interactive_count": 4,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "2026-03-18",
+      "channel": "interactive",
+      "tier": "active"
+    },
+    {
       "skill": "distill",
       "category": "Design",
       "total_uses": 4,
@@ -276,19 +309,6 @@
       "automated_count": 0,
       "artifact_count": 0,
       "last_used": "2026-03-03",
-      "channel": "interactive",
-      "tier": "active"
-    },
-    {
-      "skill": "blog-quality-review",
-      "category": "Content",
-      "total_uses": 3,
-      "slash_count": 0,
-      "mention_count": 3,
-      "interactive_count": 3,
-      "automated_count": 0,
-      "artifact_count": 0,
-      "last_used": "2026-03-10",
       "channel": "interactive",
       "tier": "active"
     },
@@ -852,6 +872,97 @@
       "tier": "never"
     },
     {
+      "skill": "firecrawl-agent",
+      "category": "Uncategorized",
+      "total_uses": 0,
+      "slash_count": 0,
+      "mention_count": 0,
+      "interactive_count": 0,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "",
+      "channel": "never",
+      "tier": "never"
+    },
+    {
+      "skill": "firecrawl-browser",
+      "category": "Uncategorized",
+      "total_uses": 0,
+      "slash_count": 0,
+      "mention_count": 0,
+      "interactive_count": 0,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "",
+      "channel": "never",
+      "tier": "never"
+    },
+    {
+      "skill": "firecrawl-crawl",
+      "category": "Uncategorized",
+      "total_uses": 0,
+      "slash_count": 0,
+      "mention_count": 0,
+      "interactive_count": 0,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "",
+      "channel": "never",
+      "tier": "never"
+    },
+    {
+      "skill": "firecrawl-download",
+      "category": "Uncategorized",
+      "total_uses": 0,
+      "slash_count": 0,
+      "mention_count": 0,
+      "interactive_count": 0,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "",
+      "channel": "never",
+      "tier": "never"
+    },
+    {
+      "skill": "firecrawl-map",
+      "category": "Uncategorized",
+      "total_uses": 0,
+      "slash_count": 0,
+      "mention_count": 0,
+      "interactive_count": 0,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "",
+      "channel": "never",
+      "tier": "never"
+    },
+    {
+      "skill": "firecrawl-scrape",
+      "category": "Uncategorized",
+      "total_uses": 0,
+      "slash_count": 0,
+      "mention_count": 0,
+      "interactive_count": 0,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "",
+      "channel": "never",
+      "tier": "never"
+    },
+    {
+      "skill": "firecrawl-search",
+      "category": "Uncategorized",
+      "total_uses": 0,
+      "slash_count": 0,
+      "mention_count": 0,
+      "interactive_count": 0,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "",
+      "channel": "never",
+      "tier": "never"
+    },
+    {
       "skill": "frontend-design",
       "category": "Design",
       "total_uses": 0,
@@ -1150,7 +1261,176 @@
       "channel": "never",
       "tier": "never"
     }
-  ]
+  ],
+  "n8n_workflows": [
+    {
+      "name": "Objection Playbook Enrichment",
+      "id": "gYe5DO7WUZ8FAdYC",
+      "active": true,
+      "total_runs": 0,
+      "successes": 0,
+      "errors": 0,
+      "success_rate": 0,
+      "last_run": "never",
+      "avg_duration_s": 0
+    },
+    {
+      "name": "Lead Intel (Inbound Enrichment)",
+      "id": "6zlDEkPZgq7OPtoE",
+      "active": true,
+      "total_runs": 8,
+      "successes": 0,
+      "errors": 8,
+      "success_rate": 0,
+      "last_run": "2026-03-18T05:00:00",
+      "avg_duration_s": 12.9
+    },
+    {
+      "name": "Lead Intel (Deal Trigger)",
+      "id": "k0ssop3fH2cEWNF4",
+      "active": true,
+      "total_runs": 8,
+      "successes": 0,
+      "errors": 8,
+      "success_rate": 0,
+      "last_run": "2026-03-18T05:00:00",
+      "avg_duration_s": 13.0
+    },
+    {
+      "name": "Lead Intel (Slack /vp)",
+      "id": "9hnyLsl25a5wQWXs",
+      "active": true,
+      "total_runs": 16,
+      "successes": 12,
+      "errors": 4,
+      "success_rate": 75,
+      "last_run": "2026-03-18T05:16:22",
+      "avg_duration_s": 13.9
+    },
+    {
+      "name": "Objection Playbook Weekly Digest",
+      "id": "ikbb2FEXZ4vIztoq",
+      "active": true,
+      "total_runs": 0,
+      "successes": 0,
+      "errors": 0,
+      "success_rate": 0,
+      "last_run": "never",
+      "avg_duration_s": 0
+    },
+    {
+      "name": "SEO Health Check",
+      "id": "keGaiqJBLSeCmqqb",
+      "active": true,
+      "total_runs": 0,
+      "successes": 0,
+      "errors": 0,
+      "success_rate": 0,
+      "last_run": "never",
+      "avg_duration_s": 0
+    },
+    {
+      "name": "Lead Intel (Meeting Prep)",
+      "id": "yn3zON4cU812Qnvs",
+      "active": true,
+      "total_runs": 8,
+      "successes": 0,
+      "errors": 8,
+      "success_rate": 0,
+      "last_run": "2026-03-18T05:00:00",
+      "avg_duration_s": 13.0
+    },
+    {
+      "name": "Skill Sync Check",
+      "id": "BLndwQ5AVJiw1pkE",
+      "active": true,
+      "total_runs": 0,
+      "successes": 0,
+      "errors": 0,
+      "success_rate": 0,
+      "last_run": "never",
+      "avg_duration_s": 0
+    },
+    {
+      "name": "Reddit Watchlist",
+      "id": "02gqdJBUN7DL69Hw",
+      "active": true,
+      "total_runs": 0,
+      "successes": 0,
+      "errors": 0,
+      "success_rate": 0,
+      "last_run": "never",
+      "avg_duration_s": 0
+    },
+    {
+      "name": "Objection Playbook Lookup",
+      "id": "T0sIdKJGwn2zJ847",
+      "active": true,
+      "total_runs": 20,
+      "successes": 19,
+      "errors": 1,
+      "success_rate": 95,
+      "last_run": "2026-03-18T04:55:17",
+      "avg_duration_s": 1.2
+    },
+    {
+      "name": "Lead Intel Slash (Worker)",
+      "id": "kIZaEwcglDuwj82B",
+      "active": true,
+      "total_runs": 7,
+      "successes": 4,
+      "errors": 2,
+      "success_rate": 57,
+      "last_run": "2026-03-18T05:16:23",
+      "avg_duration_s": 12.3
+    },
+    {
+      "name": "Memory Review",
+      "id": "XIlh4P1AvAS8Yq6q",
+      "active": true,
+      "total_runs": 0,
+      "successes": 0,
+      "errors": 0,
+      "success_rate": 0,
+      "last_run": "never",
+      "avg_duration_s": 0
+    },
+    {
+      "name": "Health Check",
+      "id": "xuSMeu44Xa2rrdV7",
+      "active": true,
+      "total_runs": 0,
+      "successes": 0,
+      "errors": 0,
+      "success_rate": 0,
+      "last_run": "never",
+      "avg_duration_s": 0
+    },
+    {
+      "name": "Firehose Collector",
+      "id": "WNIzIkL63sLdZMkk",
+      "active": true,
+      "total_runs": 6,
+      "successes": 6,
+      "errors": 0,
+      "success_rate": 100,
+      "last_run": "2026-03-18T05:15:00",
+      "avg_duration_s": 1.2
+    },
+    {
+      "name": "Monthly Trends Collector",
+      "id": "nM4h7u7dg5QiTBFs",
+      "active": true,
+      "total_runs": 0,
+      "successes": 0,
+      "errors": 0,
+      "success_rate": 0,
+      "last_run": "never",
+      "avg_duration_s": 0
+    }
+  ],
+  "n8n_count": 15,
+  "n8n_active": 15
 }</script>
 
 <script>
@@ -1160,7 +1440,40 @@ const maxUses = Math.max(...skills.map(s => s.total_uses), 1);
 
 // Meta
 document.getElementById('meta').textContent =
-  `${data.total_skills} skills · Scanned ${data.scan_date}`;
+  `${data.total_skills} skills · ${data.n8n_count || 0} n8n workflows · Scanned ${data.scan_date}`;
+
+// n8n section
+const n8n = data.n8n_workflows || [];
+if (n8n.length > 0) {
+  const activeCount = n8n.filter(w => w.active).length;
+  const totalRuns = n8n.reduce((s, w) => s + w.total_runs, 0);
+  const avgSuccess = n8n.length ? Math.round(n8n.reduce((s, w) => s + w.success_rate, 0) / n8n.length) : 0;
+  document.getElementById('n8n-cards').innerHTML = [
+    `<div class="card active"><div class="count">${activeCount}</div><div class="label">Active</div></div>`,
+    `<div class="card recent"><div class="count">${n8n.length - activeCount}</div><div class="label">Inactive</div></div>`,
+    `<div class="card active"><div class="count">${totalRuns}</div><div class="label">Total Runs</div></div>`,
+    `<div class="card ${avgSuccess >= 90 ? 'active' : avgSuccess >= 70 ? 'recent' : 'stale'}"><div class="count">${avgSuccess}%</div><div class="label">Avg Success</div></div>`,
+  ].join('');
+
+  document.getElementById('n8n-tbody').innerHTML = n8n
+    .sort((a, b) => b.total_runs - a.total_runs)
+    .map(w => {
+      const statusDot = w.active ? '🟢' : '⚪';
+      const rateColor = w.success_rate >= 90 ? '#22c55e' : w.success_rate >= 70 ? '#f59e0b' : '#ef4444';
+      const dur = w.avg_duration_s < 60 ? `${w.avg_duration_s}s` : `${(w.avg_duration_s/60).toFixed(1)}m`;
+      const lastRun = w.last_run === 'never' ? 'never' : w.last_run.replace('T', ' ');
+      return `<tr>
+        <td><strong>${w.name}</strong></td>
+        <td>${statusDot}</td>
+        <td>${w.total_runs} <span style="color:#999;font-size:12px">(${w.successes}✓ ${w.errors}✗)</span></td>
+        <td><span style="color:${rateColor};font-weight:600">${w.success_rate}%</span></td>
+        <td>${dur}</td>
+        <td style="color:#666;font-size:13px">${lastRun}</td>
+      </tr>`;
+    }).join('');
+} else {
+  document.getElementById('n8n-section').style.display = 'none';
+}
 
 // Cards
 const cardHTML = ['active','recent','stale','never'].map(tier => {
