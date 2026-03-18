@@ -4,95 +4,316 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Skill Usage Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --blue-700: #0B51AE;
-    --blue-500: #1882FF;
-    --text: #3A3A3A;
-    --bg: #FFFFFF;
-    --border: #E5E7EB;
-    --green: #059669;
-    --green-bg: #ECFDF5;
-    --blue-bg: #EFF6FF;
-    --amber: #D97706;
-    --amber-bg: #FFFBEB;
-    --red: #DC2626;
-    --red-bg: #FEF2F2;
-    --gray: #6B7280;
-    --gray-bg: #F9FAFB;
+    --ink: #1a1a2e;
+    --text: #2d2d3a;
+    --text-secondary: #64647a;
+    --surface: #faf9f7;
+    --surface-warm: #f4f2ee;
+    --white: #ffffff;
+    --border: #e8e6e1;
+    --blue: #0B51AE;
+    --blue-light: #1882FF;
+    --green: #1a7a4f;
+    --green-bg: #e8f5ee;
+    --amber: #b45309;
+    --amber-bg: #fef3e2;
+    --red: #b91c1c;
+    --red-bg: #fde8e8;
+    --blue-bg: #e8f0fd;
+    --cat-content: #6d28d9;
+    --cat-content-bg: #f3edff;
+    --cat-seo: #0d6e6e;
+    --cat-seo-bg: #e6f5f5;
+    --cat-design: #be185d;
+    --cat-design-bg: #fde8f0;
+    --cat-infra: #4a5568;
+    --cat-infra-bg: #edf0f4;
+    --cat-outbound: #c2410c;
+    --cat-outbound-bg: #fff1e6;
+    --cat-ads: #7c3aed;
+    --cat-ads-bg: #f0e8ff;
+    --cat-launch: #0369a1;
+    --cat-launch-bg: #e4f1fb;
+    --cat-sales: #047857;
+    --cat-sales-bg: #e6f7f0;
+    --cat-data: #6b5b3e;
+    --cat-data-bg: #f5f0e6;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: Inter, -apple-system, sans-serif; color: var(--text); background: var(--gray-bg); line-height: 1.5; }
-
-  .header { background: var(--blue-700); color: white; padding: 24px 32px; }
-  .header h1 { font-family: 'Satoshi', Inter, sans-serif; font-size: 22px; font-weight: 700; }
-  .header .meta { font-size: 13px; opacity: 0.8; margin-top: 4px; }
-
-  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 24px 32px; }
-  .card { border-radius: 8px; padding: 20px; border: 1px solid var(--border); background: var(--bg); }
-  .card .count { font-size: 36px; font-weight: 700; }
-  .card .label { font-size: 13px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; }
-  .card.active { border-left: 4px solid var(--green); }
-  .card.active .count { color: var(--green); }
-  .card.recent { border-left: 4px solid var(--blue-500); }
-  .card.recent .count { color: var(--blue-500); }
-  .card.stale { border-left: 4px solid var(--amber); }
-  .card.stale .count { color: var(--amber); }
-  .card.never { border-left: 4px solid var(--red); }
-  .card.never .count { color: var(--red); }
-
-  .controls { padding: 0 32px 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-  .controls select, .controls input {
-    padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px;
-    font-size: 14px; background: var(--bg);
+  body {
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    color: var(--text); background: var(--surface);
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
   }
-  .controls input { width: 240px; }
-  .controls label { font-size: 13px; color: var(--gray); }
 
-  .table-wrap { padding: 0 32px 32px; }
-  table { width: 100%; border-collapse: collapse; background: var(--bg); border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
-  th { background: var(--gray-bg); padding: 10px 14px; text-align: left; font-size: 12px;
-       text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray); cursor: pointer;
-       user-select: none; border-bottom: 1px solid var(--border); white-space: nowrap; }
-  th:hover { background: #EEE; }
-  th.sorted-asc::after { content: " ▲"; font-size: 10px; }
-  th.sorted-desc::after { content: " ▼"; font-size: 10px; }
-  td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 14px; }
+  /* --- Header --- */
+  .header {
+    background: var(--ink); color: var(--surface);
+    padding: 40px 40px 36px;
+  }
+  .header h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 36px; font-weight: 700;
+    letter-spacing: -0.5px; line-height: 1.1;
+  }
+  .header .meta {
+    font-size: 13px; opacity: 0.45;
+    margin-top: 6px; font-weight: 400;
+    letter-spacing: 0.3px; text-transform: uppercase;
+  }
+  .header .tier-summary {
+    margin-top: 20px; display: flex; gap: 32px; flex-wrap: wrap;
+    padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .header .tier-summary span {
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .header .tier-summary .count {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 28px;
+    letter-spacing: -0.5px; line-height: 1;
+  }
+  .header .tier-summary .tier-label {
+    font-size: 11px; text-transform: uppercase;
+    letter-spacing: 1px; opacity: 0.5; font-weight: 500;
+  }
+
+  /* --- Controls --- */
+  .controls {
+    padding: 24px 40px 20px; display: flex;
+    gap: 10px; align-items: center; flex-wrap: wrap;
+  }
+  .controls select, .controls input {
+    padding: 9px 14px; border: 1px solid var(--border);
+    border-radius: 4px; font-size: 13px;
+    background: var(--white); color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    transition: border-color 0.15s ease;
+  }
+  .controls select:focus, .controls input:focus {
+    outline: 2px solid var(--blue); outline-offset: -1px;
+    border-color: var(--blue);
+  }
+  .controls select { cursor: pointer; }
+  .controls input { width: 260px; }
+  .controls .shortcut-hint {
+    font-size: 11px; color: var(--text-secondary);
+    margin-left: 4px; opacity: 0.6;
+  }
+
+  /* --- Sections --- */
+  .section-head {
+    padding: 32px 40px 14px;
+    display: flex; align-items: baseline; gap: 12px;
+  }
+  .section-head h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--ink); font-size: 18px; font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  .section-head .summary {
+    font-size: 13px; color: var(--text-secondary);
+  }
+
+  /* --- Tables --- */
+  .table-wrap { padding: 0 40px 40px; }
+  table {
+    width: 100%; border-collapse: collapse;
+    background: var(--white);
+  }
+  th {
+    padding: 11px 16px; text-align: left;
+    font-size: 10px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 1.2px;
+    color: var(--text-secondary);
+    user-select: none; white-space: nowrap;
+    border-bottom: 2px solid var(--ink);
+    font-family: 'Space Grotesk', sans-serif;
+    transition: color 0.15s ease;
+  }
+  th[data-col] { cursor: pointer; }
+  th[data-col]:hover { color: var(--ink); }
+  th.sorted-asc::after { content: " \u25B2"; font-size: 9px; }
+  th.sorted-desc::after { content: " \u25BC"; font-size: 9px; }
+  td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
   tr:last-child td { border-bottom: none; }
-  tr:hover { background: var(--gray-bg); }
+  tr { transition: background-color 0.1s ease; }
+  tr:hover td { background: var(--surface-warm); }
   tr.hidden { display: none; }
 
+  /* Skill name — the most important column */
+  td:first-child strong {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600; font-size: 14px;
+    letter-spacing: -0.2px; color: var(--ink);
+  }
+
+  /* Uses column — tabular numbers */
+  td:nth-child(3) {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600; font-variant-numeric: tabular-nums;
+    letter-spacing: -0.3px;
+  }
+
+  /* --- Badges --- */
   .badge {
-    display: inline-block; padding: 2px 8px; border-radius: 12px;
-    font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px;
+    display: inline-block; padding: 3px 10px;
+    border-radius: 3px;
+    font-size: 10px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-family: 'Space Grotesk', sans-serif;
   }
   .badge.active { background: var(--green-bg); color: var(--green); }
-  .badge.recent { background: var(--blue-bg); color: var(--blue-500); }
+  .badge.recent { background: var(--blue-bg); color: var(--blue); }
   .badge.stale { background: var(--amber-bg); color: var(--amber); }
   .badge.never { background: var(--red-bg); color: var(--red); }
 
   .badge-cat {
-    display: inline-block; padding: 2px 8px; border-radius: 12px;
-    font-size: 11px; font-weight: 500; background: #F3F4F6; color: var(--gray);
+    display: inline-block; padding: 3px 10px;
+    border-radius: 3px;
+    font-size: 10px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    font-family: 'Space Grotesk', sans-serif;
   }
+  .badge-cat[data-cat="Content"] { background: var(--cat-content-bg); color: var(--cat-content); }
+  .badge-cat[data-cat="SEO"] { background: var(--cat-seo-bg); color: var(--cat-seo); }
+  .badge-cat[data-cat="Design"] { background: var(--cat-design-bg); color: var(--cat-design); }
+  .badge-cat[data-cat="Infra"] { background: var(--cat-infra-bg); color: var(--cat-infra); }
+  .badge-cat[data-cat="Outbound"] { background: var(--cat-outbound-bg); color: var(--cat-outbound); }
+  .badge-cat[data-cat="Ads"] { background: var(--cat-ads-bg); color: var(--cat-ads); }
+  .badge-cat[data-cat="Launch"] { background: var(--cat-launch-bg); color: var(--cat-launch); }
+  .badge-cat[data-cat="Sales"] { background: var(--cat-sales-bg); color: var(--cat-sales); }
+  .badge-cat[data-cat="Data"] { background: var(--cat-data-bg); color: var(--cat-data); }
 
-  .bar-wrap { width: 80px; height: 8px; background: #F3F4F6; border-radius: 4px; overflow: hidden; }
-  .bar { height: 100%; background: var(--blue-500); border-radius: 4px; min-width: 2px; }
-
-  .channel { font-size: 12px; color: var(--gray); }
-  .channel .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 4px; }
-  .channel .dot.interactive { background: var(--blue-500); }
+  /* --- Channel dots --- */
+  .channel { font-size: 12px; color: var(--text-secondary); }
+  .channel .dot {
+    display: inline-block; width: 7px; height: 7px;
+    border-radius: 50%; margin-right: 5px;
+  }
+  .channel .dot.interactive { background: var(--blue-light); }
   .channel .dot.automated { background: var(--green); }
   .channel .dot.both { background: var(--amber); }
   .channel .dot.never { background: #D1D5DB; }
 
+  /* --- Group headers --- */
   .category-header {
-    padding: 12px 14px; background: var(--gray-bg); font-weight: 600; font-size: 13px;
-    text-transform: uppercase; letter-spacing: 0.5px; color: var(--blue-700);
+    padding: 14px 16px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 12px;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--ink); background: var(--surface-warm);
     cursor: pointer; border-bottom: 1px solid var(--border);
   }
-  .category-header:hover { background: #E8E8E8; }
-  .category-header .toggle { float: right; font-size: 11px; color: var(--gray); }
+  .category-header:hover { background: var(--border); }
+  .category-header .toggle {
+    float: right; font-size: 11px;
+    color: var(--text-secondary); font-weight: 500;
+  }
+
+  /* --- n8n table --- */
+  .n8n-rate { font-weight: 600; font-family: 'Space Grotesk', sans-serif; }
+  .n8n-rate.good { color: var(--green); }
+  .n8n-rate.warn { color: var(--amber); }
+  .n8n-rate.bad { color: var(--red); }
+  .n8n-meta { color: var(--text-secondary); font-size: 12px; }
+  .n8n-last { color: var(--text-secondary); font-size: 13px; }
+
+  /* --- Muted placeholder --- */
+  .muted { color: var(--border); }
+
+  /* --- Section divider --- */
+  .section-divider {
+    margin: 0 40px; border: none;
+    border-top: 1px solid var(--border);
+  }
+
+  /* --- Empty state --- */
+  .empty-state {
+    padding: 48px 40px; text-align: center;
+    color: var(--text-secondary); font-size: 14px;
+  }
+
+  /* --- Entrance animation --- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  tbody tr {
+    animation: fadeUp 0.3s ease-out both;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    tbody tr { animation: none; }
+  }
+
+  /* --- Tablet (< 1024px) --- */
+  @media (max-width: 1023px) {
+    .header { padding: 32px 24px 28px; }
+    .header h1 { font-size: 28px; }
+    .header .tier-summary { gap: 24px; }
+    .header .tier-summary .count { font-size: 24px; }
+    .controls { padding: 20px 24px 16px; }
+    .section-head { padding: 28px 24px 12px; }
+    .table-wrap { padding: 0 24px 32px; }
+    .section-divider { margin: 0 24px; }
+    .empty-state { padding: 40px 24px; }
+  }
+
+  /* --- Mobile (< 640px) --- */
+  @media (max-width: 639px) {
+    .header { padding: 24px 16px 22px; }
+    .header h1 { font-size: 22px; letter-spacing: -0.3px; }
+    .header .meta { font-size: 12px; }
+    .header .tier-summary {
+      gap: 0; margin-top: 16px; padding-top: 16px;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      row-gap: 14px;
+    }
+    .header .tier-summary .count { font-size: 22px; }
+    .header .tier-summary .tier-label { font-size: 10px; }
+
+    .controls {
+      padding: 16px; gap: 8px;
+      flex-direction: column; align-items: stretch;
+    }
+    .controls input { width: 100%; }
+    .controls select { width: 100%; }
+    .controls .shortcut-hint { display: none; }
+
+    .section-head { padding: 24px 16px 10px; flex-direction: column; gap: 4px; }
+    .section-head h2 { font-size: 16px; }
+
+    .table-wrap {
+      padding: 0 16px 24px;
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+    }
+    table { min-width: 520px; }
+
+    th { padding: 9px 12px; font-size: 9px; letter-spacing: 1px; }
+    td { padding: 10px 12px; font-size: 13px; }
+    td:first-child strong { font-size: 13px; }
+
+    .badge { padding: 2px 7px; font-size: 9px; }
+    .badge-cat { padding: 2px 7px; font-size: 9px; }
+
+    .section-divider { margin: 0 16px; }
+    .empty-state { padding: 32px 16px; font-size: 13px; }
+  }
+
+  /* --- Small mobile (< 380px) --- */
+  @media (max-width: 379px) {
+    .header .tier-summary { grid-template-columns: repeat(2, 1fr); }
+    .header .tier-summary .count { font-size: 20px; }
+    .header h1 { font-size: 20px; }
+  }
 </style>
 </head>
 <body>
@@ -100,12 +321,11 @@
 <div class="header">
   <h1>Skill Usage Dashboard</h1>
   <div class="meta" id="meta"></div>
+  <div class="tier-summary" id="tier-summary"></div>
 </div>
 
-<div class="cards" id="cards"></div>
-
 <div class="controls">
-  <input type="text" id="search" placeholder="Filter skills...">
+  <input type="text" id="search" placeholder="Filter skills..." aria-label="Filter skills by name or category"><span class="shortcut-hint">/ to focus</span>
   <select id="tierFilter">
     <option value="all">All tiers</option>
     <option value="active">Active (30d)</option>
@@ -123,9 +343,11 @@
   </select>
 </div>
 
-<div id="n8n-section" style="margin-bottom:24px;">
-  <h2 style="color:#0B51AE;font-size:18px;margin:24px 0 12px;">n8n Workflows</h2>
-  <div class="cards" id="n8n-cards"></div>
+<div id="n8n-section">
+  <div class="section-head">
+    <h2>n8n Workflows</h2>
+    <span class="summary" id="n8n-summary"></span>
+  </div>
   <div class="table-wrap">
     <table>
       <thead><tr>
@@ -141,7 +363,12 @@
   </div>
 </div>
 
-<h2 style="color:#0B51AE;font-size:18px;margin:24px 0 12px;">Claude Skills</h2>
+<hr class="section-divider">
+
+<div class="section-head">
+  <h2>Claude Skills</h2>
+  <span class="summary" id="skills-summary"></span>
+</div>
 
 <div class="table-wrap">
   <table>
@@ -149,7 +376,6 @@
       <th data-col="skill">Skill</th>
       <th data-col="category">Category</th>
       <th data-col="total_uses" data-type="num">Uses</th>
-      <th data-col="bar">Frequency</th>
       <th data-col="last_used">Last Used</th>
       <th data-col="channel">Channel</th>
       <th data-col="tier">Tier</th>
@@ -236,6 +462,45 @@
     },
     {
       "skill": "blog-image-generator",
+      "category": "Content",
+      "total_uses": 6,
+      "slash_count": 2,
+      "mention_count": 4,
+      "interactive_count": 6,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "2026-03-03",
+      "channel": "interactive",
+      "tier": "active"
+    },
+    {
+      "skill": "seo-blog-writer",
+      "category": "Content",
+      "total_uses": 6,
+      "slash_count": 2,
+      "mention_count": 4,
+      "interactive_count": 6,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "2026-03-02",
+      "channel": "interactive",
+      "tier": "active"
+    },
+    {
+      "skill": "redshift-lookup",
+      "category": "Data",
+      "total_uses": 6,
+      "slash_count": 2,
+      "mention_count": 4,
+      "interactive_count": 6,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "2026-03-17",
+      "channel": "interactive",
+      "tier": "active"
+    },
+    {
+      "skill": "stat-lookup",
       "category": "Content",
       "total_uses": 6,
       "slash_count": 2,
@@ -342,116 +607,155 @@
       "skill": "optimize-prompt",
       "category": "Infra",
       "total_uses": 3,
-      "slash_count": 3,
-      "mention_count": 0,
+      "slash_count": 0,
+      "mention_count": 3,
       "interactive_count": 3,
       "automated_count": 0,
       "artifact_count": 0,
-      "last_used": "2026-03-16",
+      "last_used": "2026-03-10",
       "channel": "interactive",
       "tier": "active"
     },
     {
-      "skill": "reddit-watchlist",
-      "category": "SEO",
+      "skill": "churn-prevention",
+      "category": "Sales",
       "total_uses": 3,
-      "slash_count": 1,
-      "mention_count": 0,
-      "interactive_count": 1,
-      "automated_count": 2,
+      "slash_count": 0,
+      "mention_count": 3,
+      "interactive_count": 3,
+      "automated_count": 0,
       "artifact_count": 0,
-      "last_used": "2026-03-16",
-      "channel": "both",
+      "last_used": "2026-03-14",
+      "channel": "interactive",
       "tier": "active"
     },
     {
-      "skill": "audit",
-      "category": "Design",
+      "skill": "memory-review",
+      "category": "Infra",
+      "total_uses": 3,
+      "slash_count": 0,
+      "mention_count": 0,
+      "interactive_count": 0,
+      "automated_count": 0,
+      "artifact_count": 3,
+      "last_used": "2026-03-15",
+      "channel": "automated",
+      "tier": "active"
+    },
+    {
+      "skill": "google-ads-optimizer",
+      "category": "Ads",
       "total_uses": 2,
       "slash_count": 0,
       "mention_count": 2,
       "interactive_count": 2,
       "automated_count": 0,
       "artifact_count": 0,
-      "last_used": "2026-03-02",
+      "last_used": "2026-03-15",
       "channel": "interactive",
       "tier": "active"
     },
     {
-      "skill": "competitive-positioning",
+      "skill": "content-cluster",
       "category": "SEO",
-      "total_uses": 2,
-      "slash_count": 0,
-      "mention_count": 0,
-      "interactive_count": 0,
-      "automated_count": 0,
-      "artifact_count": 2,
-      "last_used": "2026-03-02",
-      "channel": "interactive",
-      "tier": "active"
-    },
-    {
-      "skill": "extract",
-      "category": "Design",
       "total_uses": 2,
       "slash_count": 0,
       "mention_count": 2,
       "interactive_count": 2,
       "automated_count": 0,
       "artifact_count": 0,
-      "last_used": "2026-03-16",
+      "last_used": "2026-03-04",
       "channel": "interactive",
       "tier": "active"
     },
     {
-      "skill": "pillar-hub",
-      "category": "SEO",
-      "total_uses": 2,
-      "slash_count": 0,
-      "mention_count": 0,
-      "interactive_count": 0,
-      "automated_count": 0,
-      "artifact_count": 2,
-      "last_used": "2026-03-06",
-      "channel": "interactive",
-      "tier": "active"
-    },
-    {
-      "skill": "polish",
-      "category": "Design",
+      "skill": "blog-pipeline",
+      "category": "Content",
       "total_uses": 2,
       "slash_count": 1,
       "mention_count": 1,
       "interactive_count": 2,
       "automated_count": 0,
       "artifact_count": 0,
-      "last_used": "2026-03-17",
+      "last_used": "2026-03-03",
       "channel": "interactive",
       "tier": "active"
     },
     {
-      "skill": "redshift-lookup",
-      "category": "Sales",
-      "total_uses": 2,
-      "slash_count": 0,
-      "mention_count": 0,
-      "interactive_count": 0,
-      "automated_count": 0,
-      "artifact_count": 2,
-      "last_used": "2026-03-13",
-      "channel": "interactive",
-      "tier": "active"
-    },
-    {
-      "skill": "seo-blog-writer",
-      "category": "SEO",
+      "skill": "composition-patterns",
+      "category": "Infra",
       "total_uses": 2,
       "slash_count": 0,
       "mention_count": 2,
       "interactive_count": 2,
       "automated_count": 0,
       "artifact_count": 0,
-      "last_used": "2026-02-26",
+      "last_used": "2026-03-16",
+      "channel": "interactive",
+      "tier": "active"
+    },
+    {
+      "skill": "critique",
+      "category": "Design",
+      "total_uses": 2,
+      "slash_count": 0,
+      "mention_count": 2,
+      "interactive_count": 2,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "2026-03-18",
+      "channel": "interactive",
+      "tier": "active"
+    },
+    {
+      "skill": "firecrawl-search",
+      "category": "Infra",
+      "total_uses": 2,
+      "slash_count": 2,
+      "mention_count": 0,
+      "interactive_count": 2,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "2026-03-04",
+      "channel": "interactive",
+      "tier": "active"
+    },
+    {
+      "skill": "firecrawl-scrape",
+      "category": "Infra",
+      "total_uses": 2,
+      "slash_count": 2,
+      "mention_count": 0,
+      "interactive_count": 2,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "2026-02-25",
+      "channel": "interactive",
+      "tier": "active"
+    },
+    {
+      "skill": "gtm-brief",
+      "category": "Launch",
+      "total_uses": 2,
+      "slash_count": 2,
+      "mention_count": 0,
+      "interactive_count": 2,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "2026-03-04",
+      "channel": "interactive",
+      "tier": "active"
+    },
+    {
+      "skill": "instantly-audit",
+      "category": "Outbound",
+      "total_uses": 2,
+      "slash_count": 0,
+      "mention_count": 2,
+      "interactive_count": 2,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "2026-03-03",
       "channel": "interactive",
       "tier": "active"
     },
@@ -459,90 +763,51 @@
       "skill": "serp-monitor",
       "category": "SEO",
       "total_uses": 2,
-      "slash_count": 0,
-      "mention_count": 1,
+      "slash_count": 1,
+      "mention_count": 0,
       "interactive_count": 1,
       "automated_count": 0,
       "artifact_count": 1,
-      "last_used": "2026-03-12",
+      "last_used": "2026-03-17",
       "channel": "interactive",
       "tier": "active"
     },
     {
-      "skill": "verify-claims",
-      "category": "Content",
+      "skill": "podcast-score",
+      "category": "Outbound",
       "total_uses": 2,
-      "slash_count": 2,
+      "slash_count": 0,
       "mention_count": 0,
-      "interactive_count": 2,
+      "interactive_count": 0,
       "automated_count": 0,
-      "artifact_count": 0,
-      "last_used": "2026-03-16",
-      "channel": "interactive",
+      "artifact_count": 2,
+      "last_used": "2026-03-11",
+      "channel": "automated",
       "tier": "active"
     },
     {
-      "skill": "animate",
-      "category": "Design",
+      "skill": "blog-image-text-overlay",
+      "category": "Content",
       "total_uses": 1,
       "slash_count": 1,
       "mention_count": 0,
       "interactive_count": 1,
       "automated_count": 0,
       "artifact_count": 0,
-      "last_used": "2026-03-16",
-      "channel": "interactive",
-      "tier": "active"
-    },
-    {
-      "skill": "blog-triage",
-      "category": "Content",
-      "total_uses": 1,
-      "slash_count": 0,
-      "mention_count": 0,
-      "interactive_count": 0,
-      "automated_count": 0,
-      "artifact_count": 1,
       "last_used": "2026-03-02",
       "channel": "interactive",
       "tier": "active"
     },
     {
-      "skill": "cannibalization-detector",
+      "skill": "blog-triage",
       "category": "SEO",
-      "total_uses": 1,
-      "slash_count": 0,
-      "mention_count": 0,
-      "interactive_count": 0,
-      "automated_count": 0,
-      "artifact_count": 1,
-      "last_used": "2026-02-26",
-      "channel": "interactive",
-      "tier": "active"
-    },
-    {
-      "skill": "clarify",
-      "category": "Design",
       "total_uses": 1,
       "slash_count": 0,
       "mention_count": 1,
       "interactive_count": 1,
       "automated_count": 0,
       "artifact_count": 0,
-      "last_used": "2026-03-12",
-      "channel": "interactive",
-      "tier": "active"
-    },
-    {
-      "skill": "colorize",
-      "category": "Design",
-      "total_uses": 1,
-      "slash_count": 1,
-      "mention_count": 0,
-      "interactive_count": 1,
-      "automated_count": 0,
-      "artifact_count": 0,
-      "last_used": "2026-03-16",
+      "last_used": "2026-03-04",
       "channel": "interactive",
       "tier": "active"
     },
@@ -551,16 +816,16 @@
       "category": "SEO",
       "total_uses": 1,
       "slash_count": 0,
-      "mention_count": 0,
-      "interactive_count": 0,
+      "mention_count": 1,
+      "interactive_count": 1,
       "automated_count": 0,
-      "artifact_count": 1,
-      "last_used": "2026-03-13",
+      "artifact_count": 0,
+      "last_used": "2026-03-04",
       "channel": "interactive",
       "tier": "active"
     },
     {
-      "skill": "make-interfaces-feel-better",
+      "skill": "frontend-design",
       "category": "Design",
       "total_uses": 1,
       "slash_count": 0,
@@ -568,73 +833,47 @@
       "interactive_count": 1,
       "automated_count": 0,
       "artifact_count": 0,
-      "last_used": "2026-03-16",
-      "channel": "interactive",
-      "tier": "active"
-    },
-    {
-      "skill": "memory-review",
-      "category": "Infra",
-      "total_uses": 1,
-      "slash_count": 0,
-      "mention_count": 0,
-      "interactive_count": 0,
-      "automated_count": 0,
-      "artifact_count": 1,
       "last_used": "2026-03-17",
       "channel": "interactive",
       "tier": "active"
     },
     {
-      "skill": "monthly-trends-blog",
-      "category": "Content",
+      "skill": "cannibalization-detector",
+      "category": "SEO",
+      "total_uses": 1,
+      "slash_count": 0,
+      "mention_count": 1,
+      "interactive_count": 1,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "2026-03-04",
+      "channel": "interactive",
+      "tier": "active"
+    },
+    {
+      "skill": "competitive-positioning",
+      "category": "SEO",
+      "total_uses": 1,
+      "slash_count": 0,
+      "mention_count": 1,
+      "interactive_count": 1,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "2026-03-04",
+      "channel": "interactive",
+      "tier": "active"
+    },
+    {
+      "skill": "reddit-watchlist",
+      "category": "SEO",
       "total_uses": 1,
       "slash_count": 0,
       "mention_count": 0,
       "interactive_count": 0,
       "automated_count": 0,
       "artifact_count": 1,
-      "last_used": "",
-      "channel": "interactive",
-      "tier": "never"
-    },
-    {
-      "skill": "normalize",
-      "category": "Design",
-      "total_uses": 1,
-      "slash_count": 1,
-      "mention_count": 0,
-      "interactive_count": 1,
-      "automated_count": 0,
-      "artifact_count": 0,
       "last_used": "2026-03-16",
-      "channel": "interactive",
-      "tier": "active"
-    },
-    {
-      "skill": "paid-ads",
-      "category": "Ads",
-      "total_uses": 1,
-      "slash_count": 0,
-      "mention_count": 1,
-      "interactive_count": 1,
-      "automated_count": 0,
-      "artifact_count": 0,
-      "last_used": "2026-03-15",
-      "channel": "interactive",
-      "tier": "active"
-    },
-    {
-      "skill": "podcast-score",
-      "category": "Infra",
-      "total_uses": 1,
-      "slash_count": 0,
-      "mention_count": 1,
-      "interactive_count": 1,
-      "automated_count": 0,
-      "artifact_count": 0,
-      "last_used": "2026-03-10",
-      "channel": "interactive",
+      "channel": "automated",
       "tier": "active"
     },
     {
@@ -644,49 +883,10 @@
       "slash_count": 0,
       "mention_count": 0,
       "interactive_count": 0,
-      "automated_count": 1,
-      "artifact_count": 0,
-      "last_used": "2026-03-16",
+      "automated_count": 0,
+      "artifact_count": 1,
+      "last_used": "2026-03-17",
       "channel": "automated",
-      "tier": "active"
-    },
-    {
-      "skill": "stat-lookup",
-      "category": "Content",
-      "total_uses": 1,
-      "slash_count": 0,
-      "mention_count": 0,
-      "interactive_count": 0,
-      "automated_count": 0,
-      "artifact_count": 1,
-      "last_used": "2026-03-13",
-      "channel": "interactive",
-      "tier": "active"
-    },
-    {
-      "skill": "strapi-updater",
-      "category": "Content",
-      "total_uses": 1,
-      "slash_count": 1,
-      "mention_count": 0,
-      "interactive_count": 1,
-      "automated_count": 0,
-      "artifact_count": 0,
-      "last_used": "2026-02-26",
-      "channel": "interactive",
-      "tier": "active"
-    },
-    {
-      "skill": "tldv-monitor",
-      "category": "Infra",
-      "total_uses": 1,
-      "slash_count": 0,
-      "mention_count": 0,
-      "interactive_count": 0,
-      "automated_count": 0,
-      "artifact_count": 1,
-      "last_used": "2026-03-16",
-      "channel": "interactive",
       "tier": "active"
     },
     {
@@ -704,7 +904,7 @@
     },
     {
       "skill": "account-router",
-      "category": "Outbound",
+      "category": "Sales",
       "total_uses": 0,
       "slash_count": 0,
       "mention_count": 0,
@@ -742,8 +942,8 @@
       "tier": "never"
     },
     {
-      "skill": "blog-image-text-overlay",
-      "category": "Content",
+      "skill": "animate",
+      "category": "Design",
       "total_uses": 0,
       "slash_count": 0,
       "mention_count": 0,
@@ -755,8 +955,8 @@
       "tier": "never"
     },
     {
-      "skill": "blog-pipeline",
-      "category": "Content",
+      "skill": "audit",
+      "category": "Design",
       "total_uses": 0,
       "slash_count": 0,
       "mention_count": 0,
@@ -781,8 +981,34 @@
       "tier": "never"
     },
     {
-      "skill": "churn-prevention",
-      "category": "Sales",
+      "skill": "clarify",
+      "category": "Design",
+      "total_uses": 0,
+      "slash_count": 0,
+      "mention_count": 0,
+      "interactive_count": 0,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "",
+      "channel": "never",
+      "tier": "never"
+    },
+    {
+      "skill": "claude-api",
+      "category": "Infra",
+      "total_uses": 0,
+      "slash_count": 0,
+      "mention_count": 0,
+      "interactive_count": 0,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "",
+      "channel": "never",
+      "tier": "never"
+    },
+    {
+      "skill": "colorize",
+      "category": "Design",
       "total_uses": 0,
       "slash_count": 0,
       "mention_count": 0,
@@ -796,45 +1022,6 @@
     {
       "skill": "community-launch-posts",
       "category": "Launch",
-      "total_uses": 0,
-      "slash_count": 0,
-      "mention_count": 0,
-      "interactive_count": 0,
-      "automated_count": 0,
-      "artifact_count": 0,
-      "last_used": "",
-      "channel": "never",
-      "tier": "never"
-    },
-    {
-      "skill": "composition-patterns",
-      "category": "Infra",
-      "total_uses": 0,
-      "slash_count": 0,
-      "mention_count": 0,
-      "interactive_count": 0,
-      "automated_count": 0,
-      "artifact_count": 0,
-      "last_used": "",
-      "channel": "never",
-      "tier": "never"
-    },
-    {
-      "skill": "content-cluster",
-      "category": "SEO",
-      "total_uses": 0,
-      "slash_count": 0,
-      "mention_count": 0,
-      "interactive_count": 0,
-      "automated_count": 0,
-      "artifact_count": 0,
-      "last_used": "",
-      "channel": "never",
-      "tier": "never"
-    },
-    {
-      "skill": "critique",
-      "category": "Design",
       "total_uses": 0,
       "slash_count": 0,
       "mention_count": 0,
@@ -872,98 +1059,7 @@
       "tier": "never"
     },
     {
-      "skill": "firecrawl-agent",
-      "category": "Uncategorized",
-      "total_uses": 0,
-      "slash_count": 0,
-      "mention_count": 0,
-      "interactive_count": 0,
-      "automated_count": 0,
-      "artifact_count": 0,
-      "last_used": "",
-      "channel": "never",
-      "tier": "never"
-    },
-    {
-      "skill": "firecrawl-browser",
-      "category": "Uncategorized",
-      "total_uses": 0,
-      "slash_count": 0,
-      "mention_count": 0,
-      "interactive_count": 0,
-      "automated_count": 0,
-      "artifact_count": 0,
-      "last_used": "",
-      "channel": "never",
-      "tier": "never"
-    },
-    {
-      "skill": "firecrawl-crawl",
-      "category": "Uncategorized",
-      "total_uses": 0,
-      "slash_count": 0,
-      "mention_count": 0,
-      "interactive_count": 0,
-      "automated_count": 0,
-      "artifact_count": 0,
-      "last_used": "",
-      "channel": "never",
-      "tier": "never"
-    },
-    {
-      "skill": "firecrawl-download",
-      "category": "Uncategorized",
-      "total_uses": 0,
-      "slash_count": 0,
-      "mention_count": 0,
-      "interactive_count": 0,
-      "automated_count": 0,
-      "artifact_count": 0,
-      "last_used": "",
-      "channel": "never",
-      "tier": "never"
-    },
-    {
-      "skill": "firecrawl-map",
-      "category": "Uncategorized",
-      "total_uses": 0,
-      "slash_count": 0,
-      "mention_count": 0,
-      "interactive_count": 0,
-      "automated_count": 0,
-      "artifact_count": 0,
-      "last_used": "",
-      "channel": "never",
-      "tier": "never"
-    },
-    {
-      "skill": "firecrawl-scrape",
-      "category": "Uncategorized",
-      "total_uses": 0,
-      "slash_count": 0,
-      "mention_count": 0,
-      "interactive_count": 0,
-      "automated_count": 0,
-      "artifact_count": 0,
-      "last_used": "",
-      "channel": "never",
-      "tier": "never"
-    },
-    {
-      "skill": "firecrawl-search",
-      "category": "Uncategorized",
-      "total_uses": 0,
-      "slash_count": 0,
-      "mention_count": 0,
-      "interactive_count": 0,
-      "automated_count": 0,
-      "artifact_count": 0,
-      "last_used": "",
-      "channel": "never",
-      "tier": "never"
-    },
-    {
-      "skill": "frontend-design",
+      "skill": "extract",
       "category": "Design",
       "total_uses": 0,
       "slash_count": 0,
@@ -976,8 +1072,8 @@
       "tier": "never"
     },
     {
-      "skill": "google-ads-optimizer",
-      "category": "Ads",
+      "skill": "firecrawl-agent",
+      "category": "Infra",
       "total_uses": 0,
       "slash_count": 0,
       "mention_count": 0,
@@ -989,8 +1085,47 @@
       "tier": "never"
     },
     {
-      "skill": "gtm-brief",
-      "category": "Launch",
+      "skill": "firecrawl-browser",
+      "category": "Infra",
+      "total_uses": 0,
+      "slash_count": 0,
+      "mention_count": 0,
+      "interactive_count": 0,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "",
+      "channel": "never",
+      "tier": "never"
+    },
+    {
+      "skill": "firecrawl-crawl",
+      "category": "Infra",
+      "total_uses": 0,
+      "slash_count": 0,
+      "mention_count": 0,
+      "interactive_count": 0,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "",
+      "channel": "never",
+      "tier": "never"
+    },
+    {
+      "skill": "firecrawl-download",
+      "category": "Infra",
+      "total_uses": 0,
+      "slash_count": 0,
+      "mention_count": 0,
+      "interactive_count": 0,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "",
+      "channel": "never",
+      "tier": "never"
+    },
+    {
+      "skill": "firecrawl-map",
+      "category": "Infra",
       "total_uses": 0,
       "slash_count": 0,
       "mention_count": 0,
@@ -1028,19 +1163,6 @@
       "tier": "never"
     },
     {
-      "skill": "instantly-audit",
-      "category": "Outbound",
-      "total_uses": 0,
-      "slash_count": 0,
-      "mention_count": 0,
-      "interactive_count": 0,
-      "automated_count": 0,
-      "artifact_count": 0,
-      "last_used": "",
-      "channel": "never",
-      "tier": "never"
-    },
-    {
       "skill": "internal-launch-announcement",
       "category": "Launch",
       "total_uses": 0,
@@ -1055,7 +1177,7 @@
     },
     {
       "skill": "launch-demo-script",
-      "category": "Sales",
+      "category": "Launch",
       "total_uses": 0,
       "slash_count": 0,
       "mention_count": 0,
@@ -1093,7 +1215,33 @@
       "tier": "never"
     },
     {
+      "skill": "make-interfaces-feel-better",
+      "category": "Design",
+      "total_uses": 0,
+      "slash_count": 0,
+      "mention_count": 0,
+      "interactive_count": 0,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "",
+      "channel": "never",
+      "tier": "never"
+    },
+    {
       "skill": "marketing-page-writer",
+      "category": "Content",
+      "total_uses": 0,
+      "slash_count": 0,
+      "mention_count": 0,
+      "interactive_count": 0,
+      "automated_count": 0,
+      "artifact_count": 0,
+      "last_used": "",
+      "channel": "never",
+      "tier": "never"
+    },
+    {
+      "skill": "monthly-trends-blog",
       "category": "Content",
       "total_uses": 0,
       "slash_count": 0,
@@ -1436,51 +1584,59 @@
 <script>
 const data = JSON.parse(document.getElementById('data').textContent);
 const skills = data.skills;
-const maxUses = Math.max(...skills.map(s => s.total_uses), 1);
 
-// Meta
+// Header meta
 document.getElementById('meta').textContent =
-  `${data.total_skills} skills · ${data.n8n_count || 0} n8n workflows · Scanned ${data.scan_date}`;
+  `Scanned ${data.scan_date}`;
+
+// Tier summary in header
+const tc = data.tier_counts;
+const tierItems = [
+  [data.total_skills, 'total'],
+  [tc.active, 'active'],
+  tc.recent ? [tc.recent, 'recent'] : null,
+  tc.stale ? [tc.stale, 'stale'] : null,
+  [tc.never, 'unused'],
+  [data.n8n_count || 0, 'workflows'],
+].filter(Boolean);
+document.getElementById('tier-summary').innerHTML = tierItems
+  .map(([v, l]) => `<span><span class="count">${v}</span><span class="tier-label">${l}</span></span>`)
+  .join('');
 
 // n8n section
 const n8n = data.n8n_workflows || [];
 if (n8n.length > 0) {
   const activeCount = n8n.filter(w => w.active).length;
   const totalRuns = n8n.reduce((s, w) => s + w.total_runs, 0);
-  const avgSuccess = n8n.length ? Math.round(n8n.reduce((s, w) => s + w.success_rate, 0) / n8n.length) : 0;
-  document.getElementById('n8n-cards').innerHTML = [
-    `<div class="card active"><div class="count">${activeCount}</div><div class="label">Active</div></div>`,
-    `<div class="card recent"><div class="count">${n8n.length - activeCount}</div><div class="label">Inactive</div></div>`,
-    `<div class="card active"><div class="count">${totalRuns}</div><div class="label">Total Runs</div></div>`,
-    `<div class="card ${avgSuccess >= 90 ? 'active' : avgSuccess >= 70 ? 'recent' : 'stale'}"><div class="count">${avgSuccess}%</div><div class="label">Avg Success</div></div>`,
-  ].join('');
+  const totalErrors = n8n.reduce((s, w) => s + w.errors, 0);
+  document.getElementById('n8n-summary').textContent =
+    `${activeCount} active \u00B7 ${totalRuns} runs \u00B7 ${totalErrors} errors`;
 
   document.getElementById('n8n-tbody').innerHTML = n8n
     .sort((a, b) => b.total_runs - a.total_runs)
     .map(w => {
-      const statusDot = w.active ? '🟢' : '⚪';
-      const rateColor = w.success_rate >= 90 ? '#22c55e' : w.success_rate >= 70 ? '#f59e0b' : '#ef4444';
-      const dur = w.avg_duration_s < 60 ? `${w.avg_duration_s}s` : `${(w.avg_duration_s/60).toFixed(1)}m`;
-      const lastRun = w.last_run === 'never' ? 'never' : w.last_run.replace('T', ' ');
+      const noRuns = w.total_runs === 0;
+      const rateClass = noRuns ? '' : w.success_rate >= 90 ? 'good' : w.success_rate >= 70 ? 'warn' : 'bad';
+      const rateStr = noRuns ? '<span class="muted">\u2014</span>' : `<span class="n8n-rate ${rateClass}">${w.success_rate}%</span>`;
+      const dur = noRuns ? '<span class="muted">\u2014</span>' : w.avg_duration_s < 60 ? `${w.avg_duration_s}s` : `${(w.avg_duration_s/60).toFixed(1)}m`;
+      const lastRun = w.last_run === 'never' ? '<span class="muted">\u2014</span>' : w.last_run.replace('T', ' ');
       return `<tr>
         <td><strong>${w.name}</strong></td>
-        <td>${statusDot}</td>
-        <td>${w.total_runs} <span style="color:#999;font-size:12px">(${w.successes}✓ ${w.errors}✗)</span></td>
-        <td><span style="color:${rateColor};font-weight:600">${w.success_rate}%</span></td>
+        <td>${w.active ? '\u{1F7E2}' : '\u26AA'}</td>
+        <td>${noRuns ? '<span class="muted">\u2014</span>' : `${w.total_runs} <span class="n8n-meta">(${w.successes}\u2713 ${w.errors}\u2717)</span>`}</td>
+        <td>${rateStr}</td>
         <td>${dur}</td>
-        <td style="color:#666;font-size:13px">${lastRun}</td>
+        <td class="n8n-last">${lastRun}</td>
       </tr>`;
     }).join('');
 } else {
   document.getElementById('n8n-section').style.display = 'none';
 }
 
-// Cards
-const cardHTML = ['active','recent','stale','never'].map(tier => {
-  const labels = {active:'Active (30d)',recent:'Recent (90d)',stale:'Stale (>90d)',never:'Never Used'};
-  return `<div class="card ${tier}"><div class="count">${data.tier_counts[tier]}</div><div class="label">${labels[tier]}</div></div>`;
-}).join('');
-document.getElementById('cards').innerHTML = cardHTML;
+// Skills summary
+const totalUses = skills.reduce((s, sk) => s + sk.total_uses, 0);
+document.getElementById('skills-summary').textContent =
+  `${totalUses} total uses across ${skills.length} skills`;
 
 // Category filter options
 const cats = [...new Set(skills.map(s => s.category))].sort();
@@ -1529,24 +1685,27 @@ function renderRows() {
       : Object.keys(groups).sort();
     groupOrder.forEach(g => {
       if (!groups[g]) return;
-      html += `<tr class="category-header"><td colspan="7">${g} <span class="toggle">${groups[g].length} skills</span></td></tr>`;
+      html += `<tr class="category-header"><td colspan="6">${g.charAt(0).toUpperCase() + g.slice(1)} <span class="toggle">${groups[g].length}</span></td></tr>`;
       groups[g].forEach(s => { html += rowHTML(s); });
     });
   } else {
     filtered.forEach(s => { html += rowHTML(s); });
   }
 
+  if (!html) {
+    html = '<tr><td colspan="6" class="empty-state">No skills match your filters.</td></tr>';
+  }
+
   tbody.innerHTML = html;
+  staggerRows();
 }
 
 function rowHTML(s) {
-  const pct = maxUses > 0 ? Math.round((s.total_uses / maxUses) * 100) : 0;
-  const lastStr = s.last_used || '<span style="color:#D1D5DB">—</span>';
+  const lastStr = s.last_used || '<span class="muted">\u2014</span>';
   return `<tr>
     <td><strong>${s.skill}</strong></td>
-    <td><span class="badge-cat">${s.category}</span></td>
+    <td><span class="badge-cat" data-cat="${s.category}">${s.category}</span></td>
     <td>${s.total_uses}</td>
-    <td><div class="bar-wrap"><div class="bar" style="width:${pct}%"></div></div></td>
     <td>${lastStr}</td>
     <td><span class="channel"><span class="dot ${s.channel}"></span>${s.channel}</span></td>
     <td><span class="badge ${s.tier}">${s.tier}</span></td>
@@ -1557,11 +1716,11 @@ function rowHTML(s) {
 document.querySelectorAll('th[data-col]').forEach(th => {
   th.addEventListener('click', () => {
     const col = th.dataset.col;
-    if (col === 'bar') return;
     if (sortCol === col) { sortDir = sortDir === 'asc' ? 'desc' : 'asc'; }
     else { sortCol = col; sortDir = col === 'total_uses' ? 'desc' : 'asc'; }
-    document.querySelectorAll('th').forEach(t => t.classList.remove('sorted-asc','sorted-desc'));
+    document.querySelectorAll('th').forEach(t => { t.classList.remove('sorted-asc','sorted-desc'); t.removeAttribute('aria-sort'); });
     th.classList.add(sortDir === 'asc' ? 'sorted-asc' : 'sorted-desc');
+    th.setAttribute('aria-sort', sortDir === 'asc' ? 'ascending' : 'descending');
     renderRows();
   });
 });
@@ -1572,9 +1731,32 @@ document.getElementById('tierFilter').addEventListener('change', renderRows);
 document.getElementById('catFilter').addEventListener('change', renderRows);
 document.getElementById('groupBy').addEventListener('change', renderRows);
 
+// Stagger animation (cap at 800ms total)
+function staggerRows() {
+  const rows = document.querySelectorAll('tbody tr:not(.category-header)');
+  const step = rows.length > 40 ? Math.floor(800 / rows.length) : 20;
+  rows.forEach((tr, i) => {
+    tr.style.animationDelay = `${i * step}ms`;
+  });
+}
+
+// Keyboard shortcut: / to focus search
+document.addEventListener('keydown', (e) => {
+  if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+    e.preventDefault();
+    document.getElementById('search').focus();
+  }
+  if (e.key === 'Escape') {
+    document.getElementById('search').blur();
+  }
+});
+
 // Initial render
-document.querySelector('th[data-col="total_uses"]').classList.add('sorted-desc');
+const initSortTh = document.querySelector('th[data-col="total_uses"]');
+initSortTh.classList.add('sorted-desc');
+initSortTh.setAttribute('aria-sort', 'descending');
 renderRows();
+staggerRows();
 </script>
 </body>
 </html>
