@@ -241,16 +241,7 @@
 
   .page-footer strong { color: #1A1A2E; font-weight: 600; }
 
-  /* Scale iframes responsively */
-  @media (max-width: 1300px) {
-    .frame-scaler { max-width: 100%; }
-    .frame-wrapper iframe {
-      transform: scale(calc(100cqw / 1200));
-    }
-    .frame-scaler {
-      container-type: inline-size;
-    }
-  }
+  /* Responsive scaling handled by JS — no CSS override needed */
 </style>
 </head>
 <body>
