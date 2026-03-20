@@ -265,6 +265,9 @@
 <!-- ── Nav ── -->
 <nav class="nav">
   <a href="#hero" class="active">Before / After (Refined)</a>
+  <a href="#timeline">Timeline</a>
+  <a href="#product-shot">Product Shot</a>
+  <a href="#spectrum">Spectrum</a>
   <a href="#funnel">The Funnel</a>
   <a href="#convergence">Convergence</a>
   <a href="#before-after-v1">Before / After (v1)</a>
@@ -311,6 +314,138 @@
       <div class="note-card idea">
         <h4>Design directions</h4>
         <p>Consider: (1) Dark-mode left side for stronger chaos feeling, (2) Showing the actual VP report UI on the right instead of a mockup, (3) Using real customer workspace names/data for authenticity.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="separator"></div>
+
+  <!-- ══ CONCEPT A: Timeline ══ -->
+  <section class="concept" id="timeline">
+    <div class="concept-header">
+      <div class="concept-number star">A</div>
+      <div>
+        <div class="concept-title">
+          The Week at a Glance (Timeline)
+          <span class="concept-badge recommended">New</span>
+        </div>
+        <p class="concept-subtitle">
+          A horizontal Mon&rarr;Sun timeline with stacked bar segments per day &mdash; taller bars for busier days, color-coded by severity. Thursday towers over the weekend. At the right edge, a desktop notification card (not a report clone) shows &ldquo;Your weekly report is ready&rdquo; arriving Monday 8:00am. Introduces the <em>time dimension</em> no other concept has.
+        </p>
+      </div>
+    </div>
+
+    <div class="frame-scaler">
+      <div class="frame-wrapper">
+        <iframe src="timeline.html" scrolling="no"></iframe>
+      </div>
+    </div>
+
+    <a href="timeline.html" target="_blank" class="view-live">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3v10h10v-3M9 2h5v5M7 9l7-7"/></svg>
+      View full size (1200 &times; 630)
+    </a>
+
+    <div class="design-notes">
+      <div class="note-card pro">
+        <h4>What works</h4>
+        <p>Communicates the &ldquo;set it and forget it&rdquo; value prop. Shows that reports are <em>periodic</em>, not one-off. The varying dot density per day tells a story about monitoring rhythm. Mini annotation cards highlight key events without cluttering.</p>
+      </div>
+      <div class="note-card pro">
+        <h4>Unique angle</h4>
+        <p>Only concept that introduces the time dimension. All others are spatial transformations (left&rarr;right). This one shows that a week of noise becomes one Monday morning briefing. Inspired by keyword monitoring software blog evolution timeline.</p>
+      </div>
+      <div class="note-card idea">
+        <h4>Design directions</h4>
+        <p>Could animate dots accumulating day-by-day for video/GIF use. Consider adding a &ldquo;Delivered Monday 8:00am&rdquo; timestamp at the report card for stronger scheduling emphasis. Weekend dots could be even more sparse to show real-world rhythm.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="separator"></div>
+
+  <!-- ══ CONCEPT B: Product Shot ══ -->
+  <section class="concept" id="product-shot">
+    <div class="concept-header">
+      <div class="concept-number star">B</div>
+      <div>
+        <div class="concept-title">
+          The Product Shot (Realistic UI)
+          <span class="concept-badge recommended">New</span>
+        </div>
+        <p class="concept-subtitle">
+          A realistic product screenshot inside a browser chrome frame (close/min/max dots, URL bar showing app.visualping.io/reports). Settings panel on the left, report preview on the right. Warm light background &mdash; no dark gradient, no glowing accents, no annotation callouts. The UI speaks for itself. Every other concept is a metaphor; this one shows the <em>actual thing</em>.
+        </p>
+      </div>
+    </div>
+
+    <div class="frame-scaler">
+      <div class="frame-wrapper">
+        <iframe src="product-shot.html" scrolling="no"></iframe>
+      </div>
+    </div>
+
+    <a href="product-shot.html" target="_blank" class="view-live">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3v10h10v-3M9 2h5v5M7 9l7-7"/></svg>
+      View full size (1200 &times; 630)
+    </a>
+
+    <div class="design-notes">
+      <div class="note-card pro">
+        <h4>What works</h4>
+        <p>Design teams often find real UI references more actionable than abstract illustrations. The floating panel on dark gradient is a proven SaaS marketing pattern. Shows the full feature surface: scheduling, companies, custom prompt, integrations.</p>
+      </div>
+      <div class="note-card pro">
+        <h4>Practical value</h4>
+        <p>Could be used directly in product marketing, feature pages, and sales decks. The annotation callouts (&ldquo;Custom Prompt,&rdquo; &ldquo;Scheduled Delivery&rdquo;) highlight differentiating features without text-heavy explanations.</p>
+      </div>
+      <div class="note-card idea">
+        <h4>Design directions</h4>
+        <p>Consider slight 3D perspective tilt for more depth. Could swap in actual VP screenshots for the panels. The dark background makes it stand out in light-mode feeds and blog posts. Inspired by Reports Settings + Report Summary screenshots.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="separator"></div>
+
+  <!-- ══ CONCEPT C: Spectrum ══ -->
+  <section class="concept" id="spectrum">
+    <div class="concept-header">
+      <div class="concept-number star">C</div>
+      <div>
+        <div class="concept-title">
+          Signal to Intelligence (Spectrum)
+          <span class="concept-badge recommended">New</span>
+        </div>
+        <p class="concept-subtitle">
+          A left-to-right gradient spectrum where the background <em>is</em> the spectrum &mdash; warm parchment tones cooling into VP blue. Far left: dense chaotic alert cards fading into noise. Middle: signals clustering into category bubbles. Far right: a bold executive takeaway sentence (not a stats card) &mdash; showing 42 changes distilled into one insight. Thicker flow lines connect the zones.
+        </p>
+      </div>
+    </div>
+
+    <div class="frame-scaler">
+      <div class="frame-wrapper">
+        <iframe src="spectrum.html" scrolling="no"></iframe>
+      </div>
+    </div>
+
+    <a href="spectrum.html" target="_blank" class="view-live">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3v10h10v-3M9 2h5v5M7 9l7-7"/></svg>
+      View full size (1200 &times; 630)
+    </a>
+
+    <div class="design-notes">
+      <div class="note-card pro">
+        <h4>What works</h4>
+        <p>Shows a <em>continuous</em> transformation process rather than a binary before/after flip. The warm-to-cool color temperature shift reinforces the refinement narrative. Category bubbles in the middle show the AI actually classifying and grouping changes.</p>
+      </div>
+      <div class="note-card pro">
+        <h4>Most visually ambitious</h4>
+        <p>Three-zone layout with connecting flow lines creates visual richness without rainbow chaos. The spectrum bar at bottom reinforces the left-to-right narrative. Inspired by research-action-spectrum-bar and three-tier pyramid from blog imagery.</p>
+      </div>
+      <div class="note-card idea">
+        <h4>Design directions</h4>
+        <p>The flow lines could animate for video/social use. Consider making the raw signals zone denser/noisier for stronger contrast. The category bubbles could use icons instead of text for a more visual feel. Could also work vertically for mobile.</p>
       </div>
     </div>
   </section>
@@ -453,7 +588,7 @@
 <footer class="page-footer">
   <span><strong>Visualping</strong> Reports Design Concepts</span>
   <span>Created March 2026</span>
-  <span>4 concepts &middot; 1 recommended</span>
+  <span>7 concepts &middot; 4 new + recommended</span>
 </footer>
 
 <script>

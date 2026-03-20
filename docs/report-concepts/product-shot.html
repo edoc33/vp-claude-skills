@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1200">
+<title>Visualping Reports — The Product Shot</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1200px; height: 630px; overflow: hidden;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #F0EDEA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* No radial glow. No grid dots. Clean. */
+
+  /* ── Browser wrapper ── */
+  .browser {
+    position: relative; z-index: 2;
+    width: 1080px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow:
+      0 1px 2px rgba(0,0,0,0.04),
+      0 4px 16px rgba(0,0,0,0.05),
+      0 16px 40px rgba(0,0,0,0.06);
+  }
+
+  /* ── Browser chrome bar ── */
+  .browser-bar {
+    height: 36px;
+    background: #F5F5F4;
+    border-bottom: 1px solid #E5E5E3;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    gap: 12px;
+  }
+
+  .browser-controls {
+    display: flex; gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .ctrl {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+
+  .ctrl-close { background: #FF5F57; }
+  .ctrl-min { background: #FFBD2E; }
+  .ctrl-max { background: #28CA41; }
+
+  .browser-url {
+    background: #fff;
+    border: 1px solid #E0E4EA;
+    border-radius: 5px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: #64748B;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    max-width: 320px;
+  }
+
+  .browser-url svg { width: 10px; height: 10px; flex-shrink: 0; }
+
+  /* ── Content area ── */
+  .browser-content {
+    display: flex;
+    height: 490px;
+  }
+
+  /* ── Left panel: Settings ── */
+  .settings-panel {
+    width: 360px;
+    background: #F7F8FA;
+    border-right: 1px solid #E5E5E3;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sp-header {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .sp-icon {
+    width: 28px; height: 28px;
+    background: #0B51AE;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .sp-icon svg { width: 16px; height: 16px; color: #fff; }
+
+  .sp-title {
+    font-size: 14px; font-weight: 700;
+    color: #1A1A2E;
+    letter-spacing: -0.2px;
+  }
+
+  .sp-subtitle {
+    font-size: 10px; color: #8A94A0;
+  }
+
+  .form-group { margin-bottom: 14px; }
+
+  .form-label {
+    font-size: 10px; font-weight: 600;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 7px 11px;
+    background: #fff;
+    border: 1px solid #E0E4EA;
+    border-radius: 6px;
+    font-size: 11px;
+    color: #3A3A3A;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .form-select {
+    width: 100%;
+    padding: 7px 11px;
+    background: #fff;
+    border: 1px solid #E0E4EA;
+    border-radius: 6px;
+    font-size: 11px;
+    color: #3A3A3A;
+    font-family: 'Inter', sans-serif;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .form-select-arrow { font-size: 8px; color: #8A94A0; }
+
+  .form-textarea {
+    width: 100%;
+    padding: 7px 11px;
+    background: #fff;
+    border: 1px solid #E0E4EA;
+    border-radius: 6px;
+    font-size: 10px;
+    color: #64748B;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+    min-height: 52px;
+  }
+
+  /* Tags */
+  .tag-list { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+
+  .tag {
+    display: inline-flex; align-items: center; gap: 3px;
+    padding: 3px 8px;
+    background: #EFF6FF;
+    border: 1px solid #C7D7ED;
+    border-radius: 4px;
+    font-size: 9px; font-weight: 600;
+    color: #0B51AE;
+  }
+
+  .tag-x { font-size: 8px; color: #8A94A0; }
+
+  .tag-muted {
+    background: #F5F5F4;
+    border-color: #E5E5E3;
+    color: #8A94A0;
+  }
+
+  /* Toggles */
+  .toggle-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 7px 0;
+    border-bottom: 1px solid #F0F0EE;
+  }
+
+  .toggle-row:last-child { border-bottom: none; }
+
+  .toggle-label { font-size: 11px; color: #3A3A3A; font-weight: 500; }
+  .toggle-sublabel { font-size: 9px; color: #8A94A0; }
+
+  .toggle {
+    width: 32px; height: 18px;
+    background: #0B51AE;
+    border-radius: 9px;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .toggle::after {
+    content: '';
+    position: absolute;
+    top: 2px; right: 2px;
+    width: 14px; height: 14px;
+    background: #fff;
+    border-radius: 50%;
+  }
+
+  .toggle.off { background: #D0D5DD; }
+  .toggle.off::after { right: auto; left: 2px; }
+
+  /* Generate button */
+  .generate-btn {
+    margin-top: auto;
+    padding: 9px 18px;
+    background: #0B51AE;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 12px; font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+
+  .generate-btn svg { width: 14px; height: 14px; }
+
+  /* ── Right panel: Report preview ── */
+  .preview-panel {
+    flex: 1;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .preview-label {
+    font-size: 9px; font-weight: 700;
+    color: #8A94A0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 14px;
+  }
+
+  .preview-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: #0B51AE;
+    color: #fff;
+    font-size: 8px; font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 4px 10px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    width: fit-content;
+  }
+
+  .preview-badge svg { width: 10px; height: 10px; }
+
+  .preview-panel h2 {
+    font-size: 20px; font-weight: 800;
+    color: #1A1A2E;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    margin-bottom: 4px;
+  }
+
+  .preview-meta {
+    font-size: 10px; color: #8A94A0;
+    margin-bottom: 14px;
+  }
+
+  /* Stats */
+  .preview-stats {
+    display: flex; gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .p-stat {
+    flex: 1;
+    background: #F2F5FA;
+    border-radius: 6px;
+    padding: 10px 10px;
+    text-align: center;
+  }
+
+  .p-stat-val {
+    font-size: 22px; font-weight: 800;
+    color: #0B51AE;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .p-stat-val.critical { color: #D4634B; }
+
+  .p-stat-label {
+    font-size: 8px; color: #8A94A0;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-top: 3px;
+    font-weight: 600;
+  }
+
+  /* Key insight */
+  .p-insight {
+    background: #F4F7FB;
+    border-left: 3px solid #0B51AE;
+    padding: 10px 12px;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 12px;
+  }
+
+  .p-insight-label {
+    font-size: 8px; font-weight: 700;
+    color: #0B51AE;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 3px;
+  }
+
+  .p-insight p {
+    font-size: 10.5px; line-height: 1.5;
+    color: #3A3A3A;
+  }
+
+  .p-insight strong { color: #0B51AE; font-weight: 700; }
+
+  /* Change list */
+  .p-changes { display: flex; flex-direction: column; gap: 4px; }
+
+  .p-change {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 10px; color: #3A3A3A;
+  }
+
+  .p-change-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .p-change-company {
+    font-weight: 700; color: #1A1A2E;
+    min-width: 60px;
+  }
+
+  .p-change-detail {
+    flex: 1;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  .p-change-tag {
+    font-size: 7px; font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    padding: 2px 5px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .p-change-tag.critical { background: #FEF2F2; color: #D4634B; }
+  .p-change-tag.notable { background: #EFF6FF; color: #0B51AE; }
+  .p-change-tag.routine { background: #F5F5F4; color: #8A94A0; }
+
+  /* ── Brand mark (bottom right) ── */
+  .brand-mark {
+    position: absolute;
+    bottom: 16px; right: 32px;
+    display: flex; align-items: center; gap: 6px;
+    z-index: 10;
+    opacity: 0.35;
+  }
+
+  .brand-mark img { height: 16px; }
+  .brand-mark span {
+    font-size: 10px; font-weight: 600;
+    color: #0B51AE;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Browser frame ── -->
+<div class="browser">
+
+  <!-- Chrome bar -->
+  <div class="browser-bar">
+    <div class="browser-controls">
+      <span class="ctrl ctrl-close"></span>
+      <span class="ctrl ctrl-min"></span>
+      <span class="ctrl ctrl-max"></span>
+    </div>
+    <div class="browser-url">
+      <svg viewBox="0 0 12 12" fill="none">
+        <rect x="2" y="5" width="8" height="6" rx="1" fill="#16A34A"/>
+        <path d="M4 5V3.5a2 2 0 014 0V5" stroke="#16A34A" fill="none" stroke-width="1.2"/>
+      </svg>
+      app.visualping.io/reports
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="browser-content">
+
+    <!-- Left: Settings panel -->
+    <div class="settings-panel">
+      <div class="sp-header">
+        <div class="sp-icon">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M3 2.5h10a1 1 0 011 1v9a1 1 0 01-1 1H3a1 1 0 01-1-1v-9a1 1 0 011-1z"/>
+            <path d="M5 6h6M5 8.5h6M5 11h3"/>
+          </svg>
+        </div>
+        <div>
+          <div class="sp-title">Report Settings</div>
+          <div class="sp-subtitle">Configure your weekly briefing</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="form-label">Report Name</div>
+        <div class="form-input">Competitive Intelligence Report</div>
+      </div>
+
+      <div class="form-group">
+        <div class="form-label">Delivery Schedule</div>
+        <div class="form-select">
+          <span>Every Monday at 8:00am</span>
+          <span class="form-select-arrow">&#9662;</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="form-label">Monitored Companies</div>
+        <div class="tag-list">
+          <div class="tag">Apple <span class="tag-x">&times;</span></div>
+          <div class="tag">Stripe <span class="tag-x">&times;</span></div>
+          <div class="tag">Tesla <span class="tag-x">&times;</span></div>
+          <div class="tag">Snowflake <span class="tag-x">&times;</span></div>
+          <div class="tag">Nike <span class="tag-x">&times;</span></div>
+          <div class="tag">Adobe <span class="tag-x">&times;</span></div>
+          <div class="tag tag-muted">+12 more</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="form-label">Custom Prompt</div>
+        <div class="form-textarea">Focus on pricing changes, leadership transitions, and market expansion signals. Flag anything that suggests competitive repositioning.</div>
+      </div>
+
+      <div class="form-group">
+        <div class="toggle-row">
+          <div>
+            <div class="toggle-label">Scheduled delivery</div>
+            <div class="toggle-sublabel">Email report to team</div>
+          </div>
+          <div class="toggle"></div>
+        </div>
+        <div class="toggle-row">
+          <div>
+            <div class="toggle-label">Slack integration</div>
+            <div class="toggle-sublabel">#competitive-intel</div>
+          </div>
+          <div class="toggle"></div>
+        </div>
+        <div class="toggle-row">
+          <div>
+            <div class="toggle-label">Include screenshots</div>
+            <div class="toggle-sublabel">Visual diffs attached</div>
+          </div>
+          <div class="toggle off"></div>
+        </div>
+      </div>
+
+      <button class="generate-btn">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <path d="M4 8h8M8 4v8"/>
+        </svg>
+        Generate Report Preview
+      </button>
+    </div>
+
+    <!-- Right: Report preview -->
+    <div class="preview-panel">
+      <div class="preview-label">Report Preview</div>
+
+      <div class="preview-badge">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <path d="M3 2.5h10a1 1 0 011 1v9a1 1 0 01-1 1H3a1 1 0 01-1-1v-9a1 1 0 011-1z"/>
+          <path d="M5 6h6M5 8.5h6M5 11h3"/>
+        </svg>
+        Weekly Briefing
+      </div>
+
+      <h2>Competitive Intelligence<br>Report</h2>
+      <p class="preview-meta">March 17&ndash;23, 2026 &middot; 18 companies tracked</p>
+
+      <div class="preview-stats">
+        <div class="p-stat">
+          <div class="p-stat-val">42</div>
+          <div class="p-stat-label">Changes</div>
+        </div>
+        <div class="p-stat">
+          <div class="p-stat-val">18</div>
+          <div class="p-stat-label">Companies</div>
+        </div>
+        <div class="p-stat">
+          <div class="p-stat-val critical">6</div>
+          <div class="p-stat-label">Critical</div>
+        </div>
+      </div>
+
+      <div class="p-insight">
+        <div class="p-insight-label">Key Insight</div>
+        <p><strong>Pricing pressure intensifying.</strong> Two competitors cut Enterprise tiers this week &mdash; Stripe dropped to $399 and Apple launched a new $299 tier.</p>
+      </div>
+
+      <div class="p-changes">
+        <div class="p-change">
+          <div class="p-change-dot" style="background:#D4634B"></div>
+          <span class="p-change-company">Stripe</span>
+          <span class="p-change-detail">Enterprise pricing cut from $499 to $399/mo</span>
+          <span class="p-change-tag critical">Critical</span>
+        </div>
+        <div class="p-change">
+          <div class="p-change-dot" style="background:#D4634B"></div>
+          <span class="p-change-company">Apple</span>
+          <span class="p-change-detail">New business tier launched at $299/mo</span>
+          <span class="p-change-tag critical">Critical</span>
+        </div>
+        <div class="p-change">
+          <div class="p-change-dot" style="background:#0B51AE"></div>
+          <span class="p-change-company">Snowflake</span>
+          <span class="p-change-detail">New CFO appointed from Goldman Sachs</span>
+          <span class="p-change-tag notable">Notable</span>
+        </div>
+        <div class="p-change">
+          <div class="p-change-dot" style="background:#8A94A0"></div>
+          <span class="p-change-company">Microsoft</span>
+          <span class="p-change-detail">Data retention policy updated (GDPR)</span>
+          <span class="p-change-tag routine">Routine</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── Brand mark ── -->
+<div class="brand-mark">
+  <img src="logo-blue.png" alt="VP">
+  <span>visualping</span>
+</div>
+
+</body>
+</html>

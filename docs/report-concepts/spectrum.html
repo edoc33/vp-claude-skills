@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1200">
+<title>Visualping Reports — Signal to Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1200px; height: 630px; overflow: hidden;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Background: the spectrum IS the gradient (warm left → cool right) ── */
+  .bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg,
+      #F3EBE2 0%,
+      #EDE4DA 18%,
+      #E5E0DC 35%,
+      #DCE0EA 52%,
+      #D2DAF0 70%,
+      #DAE3F6 85%,
+      #EBF0FA 100%
+    );
+  }
+
+  /* ── Section labels ── */
+  .section-label {
+    position: absolute;
+    top: 28px;
+    font-size: 10px; font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    z-index: 5;
+  }
+
+  .label-signals { left: 60px; color: #A89A8A; }
+  .label-categories { left: 470px; color: #7A8898; }
+  .label-intelligence { right: 60px; color: #0B51AE; text-align: right; }
+
+  /* ── Process transition labels (between zones) ── */
+  .process-tag {
+    position: absolute;
+    font-size: 8px; font-weight: 700;
+    color: #9AA0AC;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    z-index: 5;
+    display: flex; align-items: center; gap: 3px;
+  }
+
+  .process-tag svg {
+    width: 10px; height: 10px;
+    opacity: 0.6;
+  }
+
+  /* ── Flow lines SVG ── */
+  .flow-svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 1200px; height: 630px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ── RAW SIGNALS (left zone) ── */
+  .signals-zone {
+    position: absolute;
+    top: 60px; left: 40px;
+    width: 330px; height: 480px;
+    z-index: 2;
+  }
+
+  .noise-dot {
+    position: absolute;
+    border-radius: 50%;
+  }
+
+  .raw-alert {
+    position: absolute;
+    background: rgba(253,252,251,0.85);
+    border: 1px solid #E4DFD8;
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-size: 8px;
+    color: #8A8072;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 140px;
+    text-overflow: ellipsis;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .raw-alert .ra-subject {
+    font-weight: 600; font-size: 8px;
+    color: #5A5348;
+    margin-bottom: 1px;
+    overflow: hidden; text-overflow: ellipsis;
+  }
+
+  .raw-alert .ra-preview {
+    font-size: 7px; color: #A09789;
+    overflow: hidden; text-overflow: ellipsis;
+  }
+
+  /* ── CATEGORIES (middle zone) ── */
+  .categories-zone {
+    position: absolute;
+    top: 75px; left: 390px;
+    width: 250px; height: 420px;
+    z-index: 2;
+  }
+
+  .category-group {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .cat-bubble {
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 9px; font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+
+  .cat-dots {
+    display: flex; gap: 3px;
+    justify-content: center;
+  }
+
+  .cat-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+
+  /* ── EXECUTIVE TAKEAWAY (right zone — NOT a cloned card) ── */
+  .takeaway {
+    position: absolute;
+    top: 120px; right: 50px;
+    width: 260px;
+    z-index: 2;
+  }
+
+  .takeaway-mark {
+    margin-bottom: 14px;
+  }
+
+  .takeaway-mark img { height: 20px; }
+
+  .takeaway-label {
+    font-size: 9px; font-weight: 700;
+    color: #0B51AE;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+  }
+
+  .takeaway-sentence {
+    font-size: 16px; font-weight: 500;
+    color: #1A1A2E;
+    line-height: 1.55;
+    letter-spacing: -0.2px;
+    margin-bottom: 18px;
+  }
+
+  .takeaway-sentence strong {
+    font-weight: 800;
+    color: #0B51AE;
+  }
+
+  .takeaway-meta {
+    font-size: 10px;
+    color: #8A94A0;
+    font-weight: 600;
+    padding-top: 14px;
+    border-top: 1px solid rgba(11,81,174,0.15);
+    letter-spacing: 0.2px;
+  }
+
+  .takeaway-meta strong {
+    color: #0B51AE;
+    font-weight: 800;
+  }
+
+  /* ── VP watermark ── */
+  .vp-watermark {
+    position: absolute;
+    bottom: 24px; right: 48px;
+    display: flex; align-items: center; gap: 6px;
+    opacity: 0.35;
+    z-index: 5;
+  }
+
+  .vp-watermark img { height: 16px; }
+  .vp-watermark span {
+    font-size: 10px; font-weight: 600;
+    color: #0B51AE;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<!-- ── Section labels ── -->
+<div class="section-label label-signals">Raw Signals</div>
+<div class="section-label label-categories">Categorized</div>
+<div class="section-label label-intelligence">Intelligence</div>
+
+<!-- ── Process transition labels ── -->
+<div class="process-tag" style="top: 310px; left: 340px;">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+  Classify
+</div>
+<div class="process-tag" style="top: 310px; left: 650px;">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+  Distill
+</div>
+
+<!-- ── Flow lines (stronger opacity, thicker strokes) ── -->
+<svg class="flow-svg" viewBox="0 0 1200 630">
+  <!-- Signal → Category flows -->
+  <path d="M 340 140 C 380 140, 400 120, 440 115" stroke="#B8AFA5" stroke-width="2" fill="none" opacity="0.4"/>
+  <path d="M 330 180 C 370 175, 395 150, 435 148" stroke="#B8AFA5" stroke-width="2" fill="none" opacity="0.35"/>
+  <path d="M 350 220 C 385 215, 405 195, 440 190" stroke="#B8AFA5" stroke-width="1.5" fill="none" opacity="0.3"/>
+  <path d="M 335 260 C 370 255, 400 240, 435 235" stroke="#B8AFA5" stroke-width="1.5" fill="none" opacity="0.3"/>
+  <path d="M 340 310 C 375 305, 400 295, 430 290" stroke="#B8AFA5" stroke-width="1.5" fill="none" opacity="0.25"/>
+  <path d="M 330 350 C 365 345, 395 340, 425 335" stroke="#B8AFA5" stroke-width="1" fill="none" opacity="0.2"/>
+  <path d="M 345 390 C 375 385, 405 370, 435 360" stroke="#B8AFA5" stroke-width="1" fill="none" opacity="0.15"/>
+
+  <!-- Category → Intelligence flows -->
+  <path d="M 590 125 C 660 125, 720 150, 780 170" stroke="#7A8FA8" stroke-width="2.5" fill="none" opacity="0.35"/>
+  <path d="M 595 185 C 660 180, 720 175, 780 195" stroke="#7A8FA8" stroke-width="2" fill="none" opacity="0.35"/>
+  <path d="M 580 240 C 650 235, 720 220, 780 215" stroke="#7A8FA8" stroke-width="2" fill="none" opacity="0.3"/>
+  <path d="M 585 295 C 650 285, 720 260, 780 240" stroke="#7A8FA8" stroke-width="1.5" fill="none" opacity="0.25"/>
+  <path d="M 575 345 C 640 335, 710 290, 780 260" stroke="#7A8FA8" stroke-width="1.5" fill="none" opacity="0.2"/>
+</svg>
+
+<!-- ── RAW SIGNALS ── -->
+<div class="signals-zone">
+  <!-- Noise dots — scattered broadly across the zone -->
+  <div class="noise-dot" style="top:10px;left:20px;width:5px;height:5px;background:#C4B9AA;opacity:0.5"></div>
+  <div class="noise-dot" style="top:5px;left:80px;width:4px;height:4px;background:#D0CBC4;opacity:0.4"></div>
+  <div class="noise-dot" style="top:18px;left:150px;width:6px;height:6px;background:#B8AFA5;opacity:0.5"></div>
+  <div class="noise-dot" style="top:8px;left:220px;width:4px;height:4px;background:#D4634B;opacity:0.55"></div>
+  <div class="noise-dot" style="top:25px;left:280px;width:3px;height:3px;background:#C4B9AA;opacity:0.3"></div>
+  <div class="noise-dot" style="top:160px;left:10px;width:4px;height:4px;background:#D0CBC4;opacity:0.3"></div>
+  <div class="noise-dot" style="top:200px;left:90px;width:3px;height:3px;background:#B8AFA5;opacity:0.25"></div>
+  <div class="noise-dot" style="top:240px;left:250px;width:5px;height:5px;background:#C4B9AA;opacity:0.3"></div>
+  <div class="noise-dot" style="top:280px;left:40px;width:4px;height:4px;background:#D4634B;opacity:0.35"></div>
+  <div class="noise-dot" style="top:320px;left:170px;width:3px;height:3px;background:#D0CBC4;opacity:0.2"></div>
+  <div class="noise-dot" style="top:355px;left:60px;width:5px;height:5px;background:#B8AFA5;opacity:0.2"></div>
+  <div class="noise-dot" style="top:380px;left:230px;width:4px;height:4px;background:#C4B9AA;opacity:0.15"></div>
+  <div class="noise-dot" style="top:410px;left:120px;width:3px;height:3px;background:#D0CBC4;opacity:0.12"></div>
+
+  <!-- Raw alert cards (scattered, fading opacity downward) -->
+  <div class="raw-alert" style="top: 28px; left: 5px; transform: rotate(-1deg);">
+    <div class="ra-subject">apple.com/shop changed</div>
+    <div class="ra-preview">Visual change detected on page...</div>
+  </div>
+  <div class="raw-alert" style="top: 24px; left: 155px; transform: rotate(0.5deg);">
+    <div class="ra-subject">stripe.com/pricing changed</div>
+    <div class="ra-preview">Enterprise tier pricing revised...</div>
+  </div>
+  <div class="raw-alert" style="top: 78px; left: 20px; transform: rotate(0.8deg);">
+    <div class="ra-subject">tesla.com/careers changed</div>
+    <div class="ra-preview">47 new engineering roles added...</div>
+  </div>
+  <div class="raw-alert" style="top: 74px; left: 178px; transform: rotate(-0.5deg);">
+    <div class="ra-subject">sec.gov filing detected</div>
+    <div class="ra-preview">New 13F filing from Citadel...</div>
+  </div>
+  <div class="raw-alert" style="top: 128px; left: 8px; transform: rotate(-0.3deg); opacity: 0.85;">
+    <div class="ra-subject">snowflake.com/about changed</div>
+    <div class="ra-preview">Executive leadership updated...</div>
+  </div>
+  <div class="raw-alert" style="top: 124px; left: 165px; transform: rotate(0.6deg); opacity: 0.85;">
+    <div class="ra-subject">microsoft.com/legal changed</div>
+    <div class="ra-preview">Data retention policy updated...</div>
+  </div>
+  <div class="raw-alert" style="top: 178px; left: 30px; transform: rotate(0.4deg); opacity: 0.65;">
+    <div class="ra-subject">walmart.com changed</div>
+    <div class="ra-preview">Homepage promo tiles updated...</div>
+  </div>
+  <div class="raw-alert" style="top: 174px; left: 185px; transform: rotate(-0.7deg); opacity: 0.6;">
+    <div class="ra-subject">nike.com changed</div>
+    <div class="ra-preview">New campaign imagery and...</div>
+  </div>
+  <div class="raw-alert" style="top: 228px; left: 55px; opacity: 0.45; transform: rotate(0.2deg);">
+    <div class="ra-subject">adobe.com/products changed</div>
+    <div class="ra-preview">Generative AI features...</div>
+  </div>
+  <div class="raw-alert" style="top: 272px; left: 15px; opacity: 0.3; transform: rotate(-0.4deg);">
+    <div class="ra-subject">hubspot.com/pricing changed</div>
+    <div class="ra-preview">Starter bundle pricing...</div>
+  </div>
+  <div class="raw-alert" style="top: 268px; left: 170px; opacity: 0.25; transform: rotate(0.3deg);">
+    <div class="ra-subject">salesforce.com/about changed</div>
+    <div class="ra-preview">New EVP appointed from...</div>
+  </div>
+  <div class="raw-alert" style="top: 318px; left: 40px; opacity: 0.18; transform: rotate(-0.2deg);">
+    <div class="ra-subject">zoom.us/pricing changed</div>
+    <div class="ra-preview">Enterprise tier updated...</div>
+  </div>
+  <div class="raw-alert" style="top: 362px; left: 80px; opacity: 0.1; transform: rotate(0.5deg);">
+    <div class="ra-subject">figma.com/about changed</div>
+    <div class="ra-preview">Team page restructured...</div>
+  </div>
+</div>
+
+<!-- ── CATEGORIES ── -->
+<div class="categories-zone">
+  <div class="category-group" style="top: 10px; left: 30px;">
+    <div class="cat-bubble" style="background: #D4634B;">Pricing</div>
+    <div class="cat-dots">
+      <div class="cat-dot" style="background:#D4634B"></div>
+      <div class="cat-dot" style="background:#D4634B"></div>
+      <div class="cat-dot" style="background:#D4634B"></div>
+    </div>
+  </div>
+
+  <div class="category-group" style="top: 10px; left: 152px;">
+    <div class="cat-bubble" style="background: #0B51AE;">Leadership</div>
+    <div class="cat-dots">
+      <div class="cat-dot" style="background:#0B51AE"></div>
+      <div class="cat-dot" style="background:#0B51AE"></div>
+    </div>
+  </div>
+
+  <div class="category-group" style="top: 80px; left: 15px;">
+    <div class="cat-bubble" style="background: #0B51AE;">Careers</div>
+    <div class="cat-dots">
+      <div class="cat-dot" style="background:#0B51AE"></div>
+      <div class="cat-dot" style="background:#0B51AE"></div>
+      <div class="cat-dot" style="background:#0B51AE"></div>
+      <div class="cat-dot" style="background:#0B51AE"></div>
+    </div>
+  </div>
+
+  <div class="category-group" style="top: 80px; left: 140px;">
+    <div class="cat-bubble" style="background: #8A94A0;">Legal</div>
+    <div class="cat-dots">
+      <div class="cat-dot" style="background:#8A94A0"></div>
+      <div class="cat-dot" style="background:#8A94A0"></div>
+    </div>
+  </div>
+
+  <div class="category-group" style="top: 150px; left: 50px;">
+    <div class="cat-bubble" style="background: #8A94A0;">Product</div>
+    <div class="cat-dots">
+      <div class="cat-dot" style="background:#8A94A0"></div>
+      <div class="cat-dot" style="background:#8A94A0"></div>
+      <div class="cat-dot" style="background:#8A94A0"></div>
+    </div>
+  </div>
+
+  <div class="category-group" style="top: 150px; left: 170px;">
+    <div class="cat-bubble" style="background: #8A94A0;">Regulatory</div>
+    <div class="cat-dots">
+      <div class="cat-dot" style="background:#8A94A0"></div>
+    </div>
+  </div>
+
+  <div class="category-group" style="top: 220px; left: 80px;">
+    <div class="cat-bubble" style="background: #8A94A0;">Marketing</div>
+    <div class="cat-dots">
+      <div class="cat-dot" style="background:#8A94A0"></div>
+      <div class="cat-dot" style="background:#8A94A0"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── EXECUTIVE TAKEAWAY (unique output — just the distilled sentence) ── -->
+<div class="takeaway">
+  <div class="takeaway-mark">
+    <img src="logo-blue.png" alt="Visualping">
+  </div>
+  <div class="takeaway-label">Weekly Intelligence</div>
+  <div class="takeaway-sentence">
+    <strong>Pricing pressure intensifying.</strong> Two competitors cut Enterprise tiers this week &mdash; Stripe dropped to $399 and Apple launched a new $299 tier.
+  </div>
+  <div class="takeaway-meta"><strong>42</strong> changes &rarr; <strong>6</strong> categories &rarr; <strong>1</strong> insight</div>
+</div>
+
+<!-- ── VP watermark ── -->
+<div class="vp-watermark">
+  <img src="logo-blue.png" alt="VP">
+  <span>visualping</span>
+</div>
+
+</body>
+</html>
