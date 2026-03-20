@@ -255,22 +255,151 @@
 
 <!-- ── Nav ── -->
 <nav class="nav">
-  <a href="#hero" class="active">Before / After (Refined)</a>
+  <a href="#funnel" class="active">The Funnel</a>
+  <a href="#before-after-v1">Before / After (v1)</a>
+  <a href="#convergence">Convergence</a>
+  <a href="#hero">Before / After (Refined)</a>
   <a href="#timeline">Timeline</a>
   <a href="#product-shot">Product Shot</a>
   <a href="#spectrum">Spectrum</a>
-  <a href="#funnel">The Funnel</a>
-  <a href="#convergence">Convergence</a>
-  <a href="#before-after-v1">Before / After (v1)</a>
 </nav>
 
 <!-- ── Content ── -->
 <main class="content">
 
-  <!-- ══ HERO: Refined Before/After ══ -->
+  <!-- ══ 1: The Funnel ══ -->
+  <section class="concept" id="funnel">
+    <div class="concept-header">
+      <div class="concept-number">1</div>
+      <div>
+        <div class="concept-title">
+          The Funnel
+        </div>
+        <p class="concept-subtitle">
+          Alert cards on the left flow through animated SVG paths into a consolidated report on the right. Communicates the "many inputs &rarr; one output" idea. Uses 9 category colors &mdash; consider reducing to 3-4 for a less AI-generated feel.
+        </p>
+      </div>
+    </div>
+
+    <div class="frame-scaler">
+      <div class="frame-wrapper">
+        <iframe src="funnel.html" scrolling="no"></iframe>
+      </div>
+    </div>
+
+    <a href="funnel.html" target="_blank" class="view-live">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3v10h10v-3M9 2h5v5M7 9l7-7"/></svg>
+      View full size (1200 &times; 630)
+    </a>
+
+    <div class="design-notes">
+      <div class="note-card pro">
+        <h4>What works</h4>
+        <p>The flowing animation creates a satisfying sense of data being processed. The report document on the right looks like a real deliverable. Strong visual metaphor for the feature's purpose.</p>
+      </div>
+      <div class="note-card con">
+        <h4>Watch out</h4>
+        <p>The 9-color rainbow palette reads as AI-generated. The SVG flow lines lose impact in static screenshots. The left column of uniform cards feels mechanical &mdash; the combined-page variant (scattered cloud) is more organic.</p>
+      </div>
+      <div class="note-card idea">
+        <h4>Design directions</h4>
+        <p>Could work well as an animated GIF or short video for social media. Consider simplifying to fewer alert types and stronger visual contrast between "raw alerts" and "finished report."</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="separator"></div>
+
+  <!-- ══ 2: Before/After (Original) ══ -->
+  <section class="concept" id="before-after-v1">
+    <div class="concept-header">
+      <div class="concept-number">2</div>
+      <div>
+        <div class="concept-title">
+          Before / After (Original v1)
+        </div>
+        <p class="concept-subtitle">
+          The original version that inspired the refined hero. Split-screen with rotated email cards on the left and a clean report on the right. More dramatic with a gradient divider bar and pulsing "+34 more" badge, but also busier and more colorful than the refined version.
+        </p>
+      </div>
+    </div>
+
+    <div class="frame-scaler">
+      <div class="frame-wrapper">
+        <iframe src="before-after-v1.html" scrolling="no"></iframe>
+      </div>
+    </div>
+
+    <a href="before-after-v1.html" target="_blank" class="view-live">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3v10h10v-3M9 2h5v5M7 9l7-7"/></svg>
+      View full size (1200 &times; 630)
+    </a>
+
+    <div class="design-notes">
+      <div class="note-card pro">
+        <h4>What works</h4>
+        <p>The rotated, overlapping email cards create a visceral sense of inbox chaos. The "VS" divider and red "+34 more" badge add urgency. The green checkmark on the right side feels satisfying.</p>
+      </div>
+      <div class="note-card con">
+        <h4>Watch out</h4>
+        <p>The rainbow border-left colors on emails undercut the "chaos" feeling (chaos should look monotonous and overwhelming, not colorful). The gradient divider is heavy-handed. The VS badge is dated.</p>
+      </div>
+      <div class="note-card idea">
+        <h4>How the refined version improved</h4>
+        <p>Swapped rainbow email borders for muted grays. Replaced dramatic divider with a subtle line + arrow. Used inbox-style chrome (count badge) instead of scattered cards. Reduced report content to a focused key insight.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="separator"></div>
+
+  <!-- ══ 3: Convergence ══ -->
+  <section class="concept" id="convergence">
+    <div class="concept-header">
+      <div class="concept-number">3</div>
+      <div>
+        <div class="concept-title">
+          Convergence
+        </div>
+        <p class="concept-subtitle">
+          Dark background with source nodes (Pricing, Careers, IR, etc.) arranged in a circle, connected by animated particle trails to a central VP hub. Communicates "all your monitoring in one place." More abstract &mdash; doesn't show the report content itself.
+        </p>
+      </div>
+    </div>
+
+    <div class="frame-scaler">
+      <div class="frame-wrapper">
+        <iframe src="convergence.html" scrolling="no"></iframe>
+      </div>
+    </div>
+
+    <a href="convergence.html" target="_blank" class="view-live">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3v10h10v-3M9 2h5v5M7 9l7-7"/></svg>
+      View full size (1200 &times; 630)
+    </a>
+
+    <div class="design-notes">
+      <div class="note-card pro">
+        <h4>What works</h4>
+        <p>The dark background stands out in a feed or blog. The category breakdown shows the breadth of monitoring use cases. The animated dots create a sense of constant data flow.</p>
+      </div>
+      <div class="note-card con">
+        <h4>Watch out</h4>
+        <p>This is the most "generic SaaS illustration" of the three. Dark mode + glowing hub + radiating nodes is a common AI pattern. Doesn't communicate <em>reports</em> specifically &mdash; could be any aggregation feature.</p>
+      </div>
+      <div class="note-card idea">
+        <h4>Design directions</h4>
+        <p>Could be salvaged by replacing the abstract hub with an actual report document at the center. Or reposition as a "platform overview" image rather than a "reports feature" image.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="separator"></div>
+
+  <!-- ══ 4: Before/After (Refined) ══ -->
   <section class="concept" id="hero">
     <div class="concept-header">
-      <div class="concept-number star">&#9733;</div>
+      <div class="concept-number">4</div>
       <div>
         <div class="concept-title">
           Before / After (Refined)
@@ -310,10 +439,10 @@
 
   <div class="separator"></div>
 
-  <!-- ══ CONCEPT A: Timeline ══ -->
+  <!-- ══ 5: Timeline ══ -->
   <section class="concept" id="timeline">
     <div class="concept-header">
-      <div class="concept-number">1</div>
+      <div class="concept-number">5</div>
       <div>
         <div class="concept-title">
           The Week at a Glance (Timeline)
@@ -338,7 +467,7 @@
     <div class="design-notes">
       <div class="note-card pro">
         <h4>What works</h4>
-        <p>Communicates the &ldquo;set it and forget it&rdquo; value prop. Shows that reports are <em>periodic</em>, not one-off. The varying dot density per day tells a story about monitoring rhythm. Mini annotation cards highlight key events without cluttering.</p>
+        <p>Communicates the &ldquo;set it and forget it&rdquo; value prop. Shows that reports are <em>periodic</em>, not one-off. The varying bar heights per day tell a story about monitoring rhythm. Mini annotation cards highlight key events without cluttering.</p>
       </div>
       <div class="note-card pro">
         <h4>Unique angle</h4>
@@ -346,17 +475,17 @@
       </div>
       <div class="note-card idea">
         <h4>Design directions</h4>
-        <p>Could animate dots accumulating day-by-day for video/GIF use. Consider adding a &ldquo;Delivered Monday 8:00am&rdquo; timestamp at the report card for stronger scheduling emphasis. Weekend dots could be even more sparse to show real-world rhythm.</p>
+        <p>Could animate bars accumulating day-by-day for video/GIF use. Consider adding a &ldquo;Delivered Monday 8:00am&rdquo; timestamp at the report card for stronger scheduling emphasis. Weekend bars could be even shorter to show real-world rhythm.</p>
       </div>
     </div>
   </section>
 
   <div class="separator"></div>
 
-  <!-- ══ CONCEPT B: Product Shot ══ -->
+  <!-- ══ 6: Product Shot ══ -->
   <section class="concept" id="product-shot">
     <div class="concept-header">
-      <div class="concept-number">2</div>
+      <div class="concept-number">6</div>
       <div>
         <div class="concept-title">
           The Product Shot (Realistic UI)
@@ -381,25 +510,25 @@
     <div class="design-notes">
       <div class="note-card pro">
         <h4>What works</h4>
-        <p>Design teams often find real UI references more actionable than abstract illustrations. The floating panel on dark gradient is a proven SaaS marketing pattern. Shows the full feature surface: scheduling, companies, custom prompt, integrations.</p>
+        <p>Design teams often find real UI references more actionable than abstract illustrations. Browser chrome frame makes it feel like an actual product screenshot. Shows the full feature surface: scheduling, companies, custom prompt, integrations.</p>
       </div>
       <div class="note-card pro">
         <h4>Practical value</h4>
-        <p>Could be used directly in product marketing, feature pages, and sales decks. The annotation callouts (&ldquo;Custom Prompt,&rdquo; &ldquo;Scheduled Delivery&rdquo;) highlight differentiating features without text-heavy explanations.</p>
+        <p>Could be used directly in product marketing, feature pages, and sales decks. The clean warm background lets the UI panel be the star without decorative distractions.</p>
       </div>
       <div class="note-card idea">
         <h4>Design directions</h4>
-        <p>Consider slight 3D perspective tilt for more depth. Could swap in actual VP screenshots for the panels. The dark background makes it stand out in light-mode feeds and blog posts. Inspired by Reports Settings + Report Summary screenshots.</p>
+        <p>Consider slight 3D perspective tilt for more depth. Could swap in actual VP screenshots for the panels. Inspired by Reports Settings + Report Summary screenshots.</p>
       </div>
     </div>
   </section>
 
   <div class="separator"></div>
 
-  <!-- ══ CONCEPT C: Spectrum ══ -->
+  <!-- ══ 7: Spectrum ══ -->
   <section class="concept" id="spectrum">
     <div class="concept-header">
-      <div class="concept-number">3</div>
+      <div class="concept-number">7</div>
       <div>
         <div class="concept-title">
           Signal to Intelligence (Spectrum)
@@ -428,143 +557,11 @@
       </div>
       <div class="note-card pro">
         <h4>Most visually ambitious</h4>
-        <p>Three-zone layout with connecting flow lines creates visual richness without rainbow chaos. The spectrum bar at bottom reinforces the left-to-right narrative. Inspired by research-action-spectrum-bar and three-tier pyramid from blog imagery.</p>
+        <p>Three-zone layout with connecting flow lines creates visual richness without rainbow chaos. The background gradient itself tells the story. Inspired by research-action-spectrum-bar and three-tier pyramid from blog imagery.</p>
       </div>
       <div class="note-card idea">
         <h4>Design directions</h4>
         <p>The flow lines could animate for video/social use. Consider making the raw signals zone denser/noisier for stronger contrast. The category bubbles could use icons instead of text for a more visual feel. Could also work vertically for mobile.</p>
-      </div>
-    </div>
-  </section>
-
-  <div class="separator"></div>
-
-  <!-- ══ CONCEPT 4: The Funnel ══ -->
-  <section class="concept" id="funnel">
-    <div class="concept-header">
-      <div class="concept-number">4</div>
-      <div>
-        <div class="concept-title">
-          The Funnel
-          <span class="concept-badge exploration">Exploration</span>
-        </div>
-        <p class="concept-subtitle">
-          Alert cards on the left flow through animated SVG paths into a consolidated report on the right. Communicates the "many inputs &rarr; one output" idea. Uses 9 category colors &mdash; consider reducing to 3-4 for a less AI-generated feel.
-        </p>
-      </div>
-    </div>
-
-    <div class="frame-scaler">
-      <div class="frame-wrapper">
-        <iframe src="funnel.html" scrolling="no"></iframe>
-      </div>
-    </div>
-
-    <a href="funnel.html" target="_blank" class="view-live">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3v10h10v-3M9 2h5v5M7 9l7-7"/></svg>
-      View full size (1200 &times; 630)
-    </a>
-
-    <div class="design-notes">
-      <div class="note-card pro">
-        <h4>What works</h4>
-        <p>The flowing animation creates a satisfying sense of data being processed. The report document on the right looks like a real deliverable. Strong visual metaphor for the feature's purpose.</p>
-      </div>
-      <div class="note-card con">
-        <h4>Watch out</h4>
-        <p>The 9-color rainbow palette reads as AI-generated. The SVG flow lines lose impact in static screenshots. The left column of uniform cards feels mechanical &mdash; the combined-page variant (scattered cloud) is more organic.</p>
-      </div>
-      <div class="note-card idea">
-        <h4>Design directions</h4>
-        <p>Could work well as an animated GIF or short video for social media. Consider simplifying to fewer alert types and stronger visual contrast between "raw alerts" and "finished report."</p>
-      </div>
-    </div>
-  </section>
-
-  <div class="separator"></div>
-
-  <!-- ══ CONCEPT 5: Convergence ══ -->
-  <section class="concept" id="convergence">
-    <div class="concept-header">
-      <div class="concept-number">5</div>
-      <div>
-        <div class="concept-title">
-          Convergence
-          <span class="concept-badge exploration">Exploration</span>
-        </div>
-        <p class="concept-subtitle">
-          Dark background with source nodes (Pricing, Careers, IR, etc.) arranged in a circle, connected by animated particle trails to a central VP hub. Communicates "all your monitoring in one place." More abstract &mdash; doesn't show the report content itself.
-        </p>
-      </div>
-    </div>
-
-    <div class="frame-scaler">
-      <div class="frame-wrapper">
-        <iframe src="convergence.html" scrolling="no"></iframe>
-      </div>
-    </div>
-
-    <a href="convergence.html" target="_blank" class="view-live">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3v10h10v-3M9 2h5v5M7 9l7-7"/></svg>
-      View full size (1200 &times; 630)
-    </a>
-
-    <div class="design-notes">
-      <div class="note-card pro">
-        <h4>What works</h4>
-        <p>The dark background stands out in a feed or blog. The category breakdown shows the breadth of monitoring use cases. The animated dots create a sense of constant data flow.</p>
-      </div>
-      <div class="note-card con">
-        <h4>Watch out</h4>
-        <p>This is the most "generic SaaS illustration" of the three. Dark mode + glowing hub + radiating nodes is a common AI pattern. Doesn't communicate <em>reports</em> specifically &mdash; could be any aggregation feature.</p>
-      </div>
-      <div class="note-card idea">
-        <h4>Design directions</h4>
-        <p>Could be salvaged by replacing the abstract hub with an actual report document at the center. Or reposition as a "platform overview" image rather than a "reports feature" image.</p>
-      </div>
-    </div>
-  </section>
-
-  <div class="separator"></div>
-
-  <!-- ══ CONCEPT 6: Before/After (Original) ══ -->
-  <section class="concept" id="before-after-v1">
-    <div class="concept-header">
-      <div class="concept-number">6</div>
-      <div>
-        <div class="concept-title">
-          Before / After (Original v1)
-          <span class="concept-badge exploration">Exploration</span>
-        </div>
-        <p class="concept-subtitle">
-          The original version that inspired the refined hero. Split-screen with rotated email cards on the left and a clean report on the right. More dramatic with a gradient divider bar and pulsing "+34 more" badge, but also busier and more colorful than the refined version.
-        </p>
-      </div>
-    </div>
-
-    <div class="frame-scaler">
-      <div class="frame-wrapper">
-        <iframe src="before-after-v1.html" scrolling="no"></iframe>
-      </div>
-    </div>
-
-    <a href="before-after-v1.html" target="_blank" class="view-live">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3v10h10v-3M9 2h5v5M7 9l7-7"/></svg>
-      View full size (1200 &times; 630)
-    </a>
-
-    <div class="design-notes">
-      <div class="note-card pro">
-        <h4>What works</h4>
-        <p>The rotated, overlapping email cards create a visceral sense of inbox chaos. The "VS" divider and red "+34 more" badge add urgency. The green checkmark on the right side feels satisfying.</p>
-      </div>
-      <div class="note-card con">
-        <h4>Watch out</h4>
-        <p>The rainbow border-left colors on emails undercut the "chaos" feeling (chaos should look monotonous and overwhelming, not colorful). The gradient divider is heavy-handed. The VS badge is dated.</p>
-      </div>
-      <div class="note-card idea">
-        <h4>How the refined version improved</h4>
-        <p>Swapped rainbow email borders for muted grays. Replaced dramatic divider with a subtle line + arrow. Used inbox-style chrome (count badge) instead of scattered cards. Reduced report content to a focused key insight.</p>
       </div>
     </div>
   </section>
