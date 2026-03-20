@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1200">
+<title>Concept 2: Convergence</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px; height: 630px; overflow: hidden;
+    font-family: 'Satoshi', 'Inter', system-ui, sans-serif;
+    background: #0C2235;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(24,130,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(24,130,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .concept-label {
+    position: absolute;
+    top: 20px; left: 40px;
+    font-size: 11px; font-weight: 700;
+    color: rgba(255,255,255,0.3); text-transform: uppercase;
+    letter-spacing: 1px; z-index: 10;
+  }
+
+  /* Central Hub */
+  .hub {
+    position: absolute;
+    left: 600px; top: 285px;
+    width: 160px; height: 160px;
+    margin-left: -80px; margin-top: -80px;
+    z-index: 5;
+  }
+
+  .hub-glow {
+    position: absolute; inset: -40px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(24,130,255,0.3) 0%, transparent 70%);
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  .hub-ring {
+    position: absolute; inset: -8px;
+    border-radius: 50%;
+    border: 2px solid rgba(24,130,255,0.3);
+    animation: pulse 3s ease-in-out infinite 0.5s;
+  }
+
+  .hub-inner {
+    position: absolute; inset: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0B51AE, #1882FF);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    box-shadow: 0 0 60px rgba(24,130,255,0.4);
+  }
+
+  .hub-logo {
+    width: 80px; height: 80px;
+    object-fit: contain;
+  }
+  .hub-text {
+    font-size: 13px; color: rgba(255,255,255,0.85);
+    font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+    margin-top: 2px;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.08); }
+  }
+
+  /* Source Nodes — absolutely positioned with inline styles */
+  .node {
+    position: absolute;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 4px;
+    z-index: 5;
+    transform: translate(-50%, -50%);
+  }
+
+  .node-circle {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: #fff;
+    box-shadow: 0 0 24px rgba(0,0,0,0.4);
+    position: relative;
+  }
+  .node-circle::after {
+    content: '';
+    position: absolute; inset: -5px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .node-label {
+    font-size: 11px; font-weight: 700; color: #fff;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    text-align: center; white-space: nowrap;
+  }
+  .node-count {
+    font-size: 10px; color: rgba(255,255,255,0.45);
+    font-weight: 500;
+  }
+
+  /* SVG */
+  .paths-svg {
+    position: absolute; inset: 0;
+    width: 1200px; height: 630px;
+    z-index: 2;
+  }
+
+  .arc {
+    fill: none;
+    stroke-width: 1.5;
+    opacity: 0.3;
+  }
+
+  .travel-dot { filter: url(#glow); }
+
+  /* Stats bar */
+  .stats-bar {
+    position: absolute;
+    bottom: 24px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; gap: 36px;
+    z-index: 10;
+    background: rgba(12,34,53,0.85);
+    border: 1px solid rgba(24,130,255,0.2);
+    border-radius: 12px;
+    padding: 14px 32px;
+    backdrop-filter: blur(10px);
+  }
+  .stat { text-align: center; }
+  .stat-val { font-size: 20px; font-weight: 900; color: #1882FF; }
+  .stat-lbl {
+    font-size: 9px; color: rgba(255,255,255,0.5);
+    text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px;
+  }
+</style>
+</head>
+<body>
+<div class="concept-label">Concept 2 &mdash; Convergence</div>
+
+<!-- SVG Paths + Dots -->
+<svg class="paths-svg" viewBox="0 0 1200 630">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Curved paths: node positions → center (600,285) -->
+  <!-- Top center: Pricing (600, 50) -->
+  <path class="arc" stroke="#F34949" d="M600,50 C620,120 610,180 600,285" />
+  <!-- Top right: Newsroom (980, 80) -->
+  <path class="arc" stroke="#EC930D" d="M980,80 C880,140 740,220 600,285" />
+  <!-- Right: Careers (1080, 285) -->
+  <path class="arc" stroke="#20B093" d="M1080,285 C940,285 770,285 600,285" />
+  <!-- Bottom right: IR (980, 490) -->
+  <path class="arc" stroke="#1882FF" d="M980,490 C880,430 740,350 600,285" />
+  <!-- Bottom center: Terms (600, 520) -->
+  <path class="arc" stroke="#8B5CF6" d="M600,520 C580,450 590,370 600,285" />
+  <!-- Bottom left: Product (220, 490) -->
+  <path class="arc" stroke="#0B51AE" d="M220,490 C320,430 460,350 600,285" />
+  <!-- Left: ESG (120, 285) -->
+  <path class="arc" stroke="#45B013" d="M120,285 C260,285 430,285 600,285" />
+  <!-- Top left: Leadership (220, 80) -->
+  <path class="arc" stroke="#E11D48" d="M220,80 C320,140 460,220 600,285" />
+
+  <!-- Wave 1 dots -->
+  <circle r="5" fill="#F34949" class="travel-dot">
+    <animateMotion dur="2.8s" repeatCount="indefinite" path="M600,50 C620,120 610,180 600,285" />
+  </circle>
+  <circle r="5" fill="#EC930D" class="travel-dot">
+    <animateMotion dur="3.2s" repeatCount="indefinite" path="M980,80 C880,140 740,220 600,285" />
+  </circle>
+  <circle r="5" fill="#20B093" class="travel-dot">
+    <animateMotion dur="2.6s" repeatCount="indefinite" path="M1080,285 C940,285 770,285 600,285" />
+  </circle>
+  <circle r="5" fill="#1882FF" class="travel-dot">
+    <animateMotion dur="3.4s" repeatCount="indefinite" path="M980,490 C880,430 740,350 600,285" />
+  </circle>
+  <circle r="5" fill="#8B5CF6" class="travel-dot">
+    <animateMotion dur="3.0s" repeatCount="indefinite" path="M600,520 C580,450 590,370 600,285" />
+  </circle>
+  <circle r="5" fill="#0B51AE" class="travel-dot">
+    <animateMotion dur="3.3s" repeatCount="indefinite" path="M220,490 C320,430 460,350 600,285" />
+  </circle>
+  <circle r="5" fill="#45B013" class="travel-dot">
+    <animateMotion dur="2.7s" repeatCount="indefinite" path="M120,285 C260,285 430,285 600,285" />
+  </circle>
+  <circle r="5" fill="#E11D48" class="travel-dot">
+    <animateMotion dur="3.1s" repeatCount="indefinite" path="M220,80 C320,140 460,220 600,285" />
+  </circle>
+
+  <!-- Wave 2 dots (staggered) -->
+  <circle r="4" fill="#F34949" opacity="0.5" class="travel-dot">
+    <animateMotion dur="2.8s" repeatCount="indefinite" begin="1.4s" path="M600,50 C620,120 610,180 600,285" />
+  </circle>
+  <circle r="4" fill="#EC930D" opacity="0.5" class="travel-dot">
+    <animateMotion dur="3.2s" repeatCount="indefinite" begin="1.6s" path="M980,80 C880,140 740,220 600,285" />
+  </circle>
+  <circle r="4" fill="#20B093" opacity="0.5" class="travel-dot">
+    <animateMotion dur="2.6s" repeatCount="indefinite" begin="1.3s" path="M1080,285 C940,285 770,285 600,285" />
+  </circle>
+  <circle r="4" fill="#1882FF" opacity="0.5" class="travel-dot">
+    <animateMotion dur="3.4s" repeatCount="indefinite" begin="1.7s" path="M980,490 C880,430 740,350 600,285" />
+  </circle>
+  <circle r="4" fill="#8B5CF6" opacity="0.5" class="travel-dot">
+    <animateMotion dur="3.0s" repeatCount="indefinite" begin="1.5s" path="M600,520 C580,450 590,370 600,285" />
+  </circle>
+  <circle r="4" fill="#0B51AE" opacity="0.5" class="travel-dot">
+    <animateMotion dur="3.3s" repeatCount="indefinite" begin="1.65s" path="M220,490 C320,430 460,350 600,285" />
+  </circle>
+  <circle r="4" fill="#45B013" opacity="0.5" class="travel-dot">
+    <animateMotion dur="2.7s" repeatCount="indefinite" begin="1.35s" path="M120,285 C260,285 430,285 600,285" />
+  </circle>
+  <circle r="4" fill="#E11D48" opacity="0.5" class="travel-dot">
+    <animateMotion dur="3.1s" repeatCount="indefinite" begin="1.55s" path="M220,80 C320,140 460,220 600,285" />
+  </circle>
+</svg>
+
+<!-- Source Nodes — positioned with inline left/top matching SVG path starts -->
+<!-- Top center -->
+<div class="node" style="left:600px; top:50px;">
+  <div class="node-circle" style="background:#F34949;">$</div>
+  <div class="node-label">Pricing</div>
+  <div class="node-count">460 monitors</div>
+</div>
+<!-- Top right -->
+<div class="node" style="left:980px; top:80px;">
+  <div class="node-circle" style="background:#EC930D;">&#9993;</div>
+  <div class="node-label">Newsroom</div>
+  <div class="node-count">341 monitors</div>
+</div>
+<!-- Right -->
+<div class="node" style="left:1080px; top:285px;">
+  <div class="node-circle" style="background:#20B093;">&#9775;</div>
+  <div class="node-label">Careers</div>
+  <div class="node-count">287 monitors</div>
+</div>
+<!-- Bottom right -->
+<div class="node" style="left:980px; top:490px;">
+  <div class="node-circle" style="background:#1882FF;">&#9650;</div>
+  <div class="node-label">IR / Filings</div>
+  <div class="node-count">195 monitors</div>
+</div>
+<!-- Bottom center -->
+<div class="node" style="left:600px; top:520px;">
+  <div class="node-circle" style="background:#8B5CF6;">&#167;</div>
+  <div class="node-label">Terms &amp; Legal</div>
+  <div class="node-count">178 monitors</div>
+</div>
+<!-- Bottom left -->
+<div class="node" style="left:220px; top:490px;">
+  <div class="node-circle" style="background:#0B51AE;">&#9881;</div>
+  <div class="node-label">Product</div>
+  <div class="node-count">223 monitors</div>
+</div>
+<!-- Left -->
+<div class="node" style="left:120px; top:285px;">
+  <div class="node-circle" style="background:#45B013;">&#9752;</div>
+  <div class="node-label">ESG</div>
+  <div class="node-count">142 monitors</div>
+</div>
+<!-- Top left -->
+<div class="node" style="left:220px; top:80px;">
+  <div class="node-circle" style="background:#E11D48;">&#9733;</div>
+  <div class="node-label">Leadership</div>
+  <div class="node-count">96 monitors</div>
+</div>
+
+<!-- Central Hub -->
+<div class="hub">
+  <div class="hub-glow"></div>
+  <div class="hub-ring"></div>
+  <div class="hub-inner">
+    <img class="hub-logo" src="logo-white.png" alt="Visualping">
+    <div class="hub-text">Report</div>
+  </div>
+</div>
+
+<!-- Stats Bar -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-val">1,922</div>
+    <div class="stat-lbl">Total Monitors</div>
+  </div>
+  <div class="stat">
+    <div class="stat-val">8</div>
+    <div class="stat-lbl">Categories</div>
+  </div>
+  <div class="stat">
+    <div class="stat-val">42</div>
+    <div class="stat-lbl">Changes / Week</div>
+  </div>
+  <div class="stat">
+    <div class="stat-val">1</div>
+    <div class="stat-lbl">Report</div>
+  </div>
+</div>
+</body>
+</html>

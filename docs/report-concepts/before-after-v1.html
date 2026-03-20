@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1200">
+<title>Concept 3: Before / After</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px; height: 630px; overflow: hidden;
+    font-family: 'Satoshi', 'Inter', system-ui, sans-serif;
+    display: flex;
+    position: relative;
+  }
+
+  .concept-label {
+    position: absolute;
+    top: 16px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px; font-weight: 700;
+    color: rgba(255,255,255,0.4); text-transform: uppercase;
+    letter-spacing: 1px; z-index: 20;
+    background: rgba(0,0,0,0.3);
+    padding: 4px 12px; border-radius: 4px;
+  }
+
+  /* LEFT: Before (Chaos) */
+  .before {
+    width: 600px; height: 630px;
+    background: #F2F0ED;
+    position: relative;
+    overflow: hidden;
+    padding: 60px 40px 40px;
+  }
+
+  .side-label {
+    position: absolute;
+    top: 52px;
+    font-size: 13px; font-weight: 900;
+    text-transform: uppercase; letter-spacing: 2px;
+  }
+  .before .side-label {
+    left: 40px; color: #F34949;
+  }
+  .after .side-label {
+    left: 40px; color: #45B013;
+  }
+
+  .email-stack {
+    position: relative;
+    margin-top: 30px;
+    height: 480px;
+  }
+
+  .email {
+    position: absolute;
+    width: 480px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 14px 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    border-left: 3px solid;
+    font-size: 12px;
+    color: #3A3A3A;
+  }
+
+  .email-from {
+    font-size: 10px; color: #787878; margin-bottom: 4px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .email-from .unread {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #1882FF;
+  }
+  .email-subject {
+    font-weight: 700; font-size: 13px; margin-bottom: 3px;
+  }
+  .email-preview {
+    font-size: 11px; color: #787878;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .email-time {
+    position: absolute; top: 14px; right: 16px;
+    font-size: 10px; color: #787878;
+  }
+
+  /* Stacked chaotic emails */
+  .email:nth-child(1)  { top: 0;   left: 10px; transform: rotate(-1.2deg); border-color: #F34949; z-index: 8; }
+  .email:nth-child(2)  { top: 52px; left: 20px; transform: rotate(0.8deg);  border-color: #EC930D; z-index: 7; }
+  .email:nth-child(3)  { top: 104px; left: 5px; transform: rotate(-0.5deg); border-color: #1882FF; z-index: 6; }
+  .email:nth-child(4)  { top: 156px; left: 15px; transform: rotate(1.1deg); border-color: #20B093; z-index: 5; }
+  .email:nth-child(5)  { top: 208px; left: 8px;  transform: rotate(-0.9deg); border-color: #8B5CF6; z-index: 4; }
+  .email:nth-child(6)  { top: 260px; left: 18px; transform: rotate(0.6deg); border-color: #0B51AE; z-index: 3; }
+  .email:nth-child(7)  { top: 312px; left: 12px; transform: rotate(-1.5deg); border-color: #45B013; z-index: 2; }
+  .email:nth-child(8)  { top: 364px; left: 6px;  transform: rotate(0.4deg); border-color: #E11D48; z-index: 1; }
+
+  .more-badge {
+    position: absolute;
+    bottom: 20px; left: 50%;
+    transform: translateX(-50%);
+    background: #F34949;
+    color: #fff;
+    font-size: 13px; font-weight: 700;
+    padding: 8px 20px;
+    border-radius: 20px;
+    z-index: 10;
+    box-shadow: 0 4px 16px rgba(243,73,73,0.3);
+    animation: pulseBadge 2s ease-in-out infinite;
+  }
+
+  @keyframes pulseBadge {
+    0%, 100% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.05); }
+  }
+
+  /* Diagonal divider */
+  .divider {
+    position: absolute;
+    left: 596px; top: 0;
+    width: 8px; height: 630px;
+    background: linear-gradient(180deg, #F34949, #787878 30%, #45B013 70%, #45B013);
+    z-index: 15;
+  }
+  .divider::before {
+    content: 'VS';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: #3A3A3A;
+    color: #fff;
+    font-size: 11px; font-weight: 900;
+    padding: 6px 8px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+  }
+
+  /* RIGHT: After (Clean) */
+  .after {
+    width: 600px; height: 630px;
+    background: linear-gradient(180deg, #F8FAFD, #EEF3FA);
+    position: relative;
+    padding: 60px 40px 40px;
+  }
+
+  .briefing {
+    margin-top: 30px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 32px 64px -12px rgba(16,24,40,0.14);
+    padding: 28px;
+    animation: fadeIn 1s ease-out 0.5s both;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .briefing-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #E5E9F1;
+  }
+
+  .briefing-logo {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: linear-gradient(135deg, #0B51AE, #1882FF);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 900; font-size: 20px;
+  }
+
+  .briefing-title {
+    font-size: 17px; font-weight: 700; color: #0B51AE;
+  }
+  .briefing-date {
+    font-size: 11px; color: #787878; margin-top: 2px;
+  }
+
+  .briefing-stats {
+    display: flex; gap: 16px; margin-bottom: 20px;
+  }
+
+  .b-stat {
+    flex: 1;
+    background: #F8FAFD;
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+  }
+  .b-stat-num {
+    font-size: 26px; font-weight: 900; color: #0B51AE;
+  }
+  .b-stat-label {
+    font-size: 10px; color: #787878; text-transform: uppercase;
+    letter-spacing: 0.5px; margin-top: 2px;
+  }
+
+  .b-section-title {
+    font-size: 10px; font-weight: 700; color: #3A3A3A;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    margin-bottom: 10px; margin-top: 16px;
+  }
+
+  .b-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 0;
+    border-bottom: 1px solid #F2F4F8;
+    font-size: 12px; color: #3A3A3A;
+  }
+  .b-item:last-child { border: none; }
+  .b-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .b-priority {
+    font-size: 9px; font-weight: 700; padding: 2px 6px;
+    border-radius: 4px; margin-left: auto; flex-shrink: 0;
+  }
+  .b-priority.critical { background: #FEF2F2; color: #F34949; }
+  .b-priority.important { background: #FFF7ED; color: #EC930D; }
+  .b-priority.routine { background: #F0FDF4; color: #45B013; }
+
+  .b-ai {
+    background: #F0F9FF;
+    border: 1px solid #B9E6FE;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 16px;
+    font-size: 11px; color: #3A3A3A;
+    line-height: 1.5;
+  }
+  .b-ai strong {
+    font-size: 10px; color: #0B51AE;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+
+  .check-icon {
+    position: absolute;
+    top: 80px; right: 40px;
+    width: 48px; height: 48px;
+    background: #45B013;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 24px; font-weight: 900;
+    box-shadow: 0 4px 16px rgba(69,176,19,0.3);
+    animation: fadeIn 0.8s ease-out 1s both;
+  }
+</style>
+</head>
+<body>
+<div class="concept-label">Concept 3 &mdash; Before / After</div>
+
+<!-- BEFORE: Chaotic inbox -->
+<div class="before">
+  <div class="side-label">Before</div>
+  <div class="email-stack">
+    <div class="email">
+      <div class="email-from"><span class="unread"></span> Visualping Alert</div>
+      <div class="email-subject">Pricing page changed &mdash; acmecorp.com</div>
+      <div class="email-preview">We detected a visual change on the page you're monitoring...</div>
+      <div class="email-time">9:14 AM</div>
+    </div>
+    <div class="email">
+      <div class="email-from"><span class="unread"></span> Visualping Alert</div>
+      <div class="email-subject">New blog post &mdash; globex.com/newsroom</div>
+      <div class="email-preview">A new article was published on the newsroom page...</div>
+      <div class="email-time">9:08 AM</div>
+    </div>
+    <div class="email">
+      <div class="email-from"><span class="unread"></span> Visualping Alert</div>
+      <div class="email-subject">Job listing added &mdash; initech.com/careers</div>
+      <div class="email-preview">4 new positions were added to the careers page...</div>
+      <div class="email-time">8:52 AM</div>
+    </div>
+    <div class="email">
+      <div class="email-from"><span class="unread"></span> Visualping Alert</div>
+      <div class="email-subject">Terms updated &mdash; hooli.com/legal</div>
+      <div class="email-preview">Section 4.2 of the terms of service was modified...</div>
+      <div class="email-time">8:41 AM</div>
+    </div>
+    <div class="email">
+      <div class="email-from"><span class="unread"></span> Visualping Alert</div>
+      <div class="email-subject">Product page changed &mdash; piedpiper.com</div>
+      <div class="email-preview">The enterprise product page now shows new pricing tiers...</div>
+      <div class="email-time">8:33 AM</div>
+    </div>
+    <div class="email">
+      <div class="email-from"><span class="unread"></span> Visualping Alert</div>
+      <div class="email-subject">SEC filing detected &mdash; acmecorp.com/ir</div>
+      <div class="email-preview">A new 10-K filing was detected on the investor relations...</div>
+      <div class="email-time">8:15 AM</div>
+    </div>
+    <div class="email">
+      <div class="email-from"><span class="unread"></span> Visualping Alert</div>
+      <div class="email-subject">ESG report updated &mdash; globex.com</div>
+      <div class="email-preview">The sustainability section was updated with new 2026 data...</div>
+      <div class="email-time">7:59 AM</div>
+    </div>
+    <div class="email">
+      <div class="email-from"><span class="unread"></span> Visualping Alert</div>
+      <div class="email-subject">Leadership change &mdash; initech.com/about</div>
+      <div class="email-preview">The executive team page was updated to reflect a new...</div>
+      <div class="email-time">7:44 AM</div>
+    </div>
+    <div class="more-badge">+ 34 more today</div>
+  </div>
+</div>
+
+<!-- Divider -->
+<div class="divider"></div>
+
+<!-- AFTER: Clean briefing -->
+<div class="after">
+  <div class="side-label">After</div>
+  <div class="check-icon">&#10003;</div>
+
+  <div class="briefing">
+    <div class="briefing-header">
+      <div class="briefing-logo">V</div>
+      <div>
+        <div class="briefing-title">Weekly Intelligence Briefing</div>
+        <div class="briefing-date">Mar 10 &ndash; 17, 2026</div>
+      </div>
+    </div>
+
+    <div class="briefing-stats">
+      <div class="b-stat">
+        <div class="b-stat-num">42</div>
+        <div class="b-stat-label">Changes</div>
+      </div>
+      <div class="b-stat">
+        <div class="b-stat-num">18</div>
+        <div class="b-stat-label">Companies</div>
+      </div>
+      <div class="b-stat">
+        <div class="b-stat-num">6</div>
+        <div class="b-stat-label">Important</div>
+      </div>
+    </div>
+
+    <div class="b-section-title">Highlights</div>
+    <div class="b-item">
+      <div class="b-dot" style="background:#F34949"></div>
+      Acme Corp cut Enterprise pricing 15%
+      <span class="b-priority critical">Critical</span>
+    </div>
+    <div class="b-item">
+      <div class="b-dot" style="background:#EC930D"></div>
+      Globex announced acquisition of DataCo
+      <span class="b-priority important">Important</span>
+    </div>
+    <div class="b-item">
+      <div class="b-dot" style="background:#45B013"></div>
+      3 competitors updated terms of service
+      <span class="b-priority routine">Routine</span>
+    </div>
+
+    <div class="b-ai">
+      <strong>AI Summary</strong><br>
+      Pricing pressure intensifying across your competitive set. Acme's 15% Enterprise cut and Globex's acquisition signal aggressive mid-market moves. Recommend reviewing your Q2 positioning.
+    </div>
+  </div>
+</div>
+</body>
+</html>

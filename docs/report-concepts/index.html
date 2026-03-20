@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visualping Reports — Design Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #F5F5F4;
+    color: #1A1A2E;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  .page-header {
+    background: #fff;
+    border-bottom: 1px solid #E5E5E3;
+    padding: 24px 48px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .page-header img { height: 28px; }
+
+  .page-header h1 {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  .page-header .meta {
+    font-size: 12px;
+    color: #8A94A0;
+    margin-left: auto;
+  }
+
+  /* ── Nav tabs ── */
+  .nav {
+    background: #fff;
+    border-bottom: 1px solid #E5E5E3;
+    padding: 0 48px;
+    display: flex;
+    gap: 0;
+  }
+
+  .nav a {
+    display: block;
+    padding: 14px 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #8A94A0;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+  }
+
+  .nav a:hover { color: #1A1A2E; }
+  .nav a.active { color: #0B51AE; border-bottom-color: #0B51AE; }
+
+  /* ── Main content ── */
+  .content { padding: 40px 48px 80px; max-width: 1400px; margin: 0 auto; }
+
+  /* ── Concept section ── */
+  .concept {
+    margin-bottom: 64px;
+    scroll-margin-top: 120px;
+  }
+
+  .concept-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .concept-number {
+    width: 32px; height: 32px;
+    background: #0B51AE;
+    color: #fff;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  .concept-number.star {
+    background: linear-gradient(135deg, #0B51AE, #1882FF);
+  }
+
+  .concept-title {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+  }
+
+  .concept-subtitle {
+    font-size: 13px;
+    color: #8A94A0;
+    margin-top: 2px;
+    line-height: 1.5;
+    max-width: 700px;
+  }
+
+  .concept-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    margin-left: 8px;
+    position: relative;
+    top: -2px;
+  }
+
+  .concept-badge.recommended {
+    background: #DCFCE7;
+    color: #16A34A;
+  }
+
+  .concept-badge.exploration {
+    background: #F1F5F9;
+    color: #64748B;
+  }
+
+  /* ── Iframe container ── */
+  .frame-wrapper {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow:
+      0 1px 2px rgba(0,0,0,0.04),
+      0 4px 16px rgba(0,0,0,0.06),
+      0 12px 32px rgba(0,0,0,0.04);
+    background: #fff;
+    position: relative;
+  }
+
+  .frame-wrapper iframe {
+    display: block;
+    width: 1200px;
+    height: 630px;
+    border: none;
+    transform-origin: top left;
+  }
+
+  /* Scale down to fit container */
+  .frame-scaler {
+    width: 100%;
+    max-width: 1200px;
+    aspect-ratio: 1200 / 630;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ── Design notes ── */
+  .design-notes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .note-card {
+    background: #fff;
+    border: 1px solid #E5E5E3;
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+
+  .note-card h4 {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #0B51AE;
+    margin-bottom: 6px;
+  }
+
+  .note-card p {
+    font-size: 12px;
+    color: #64748B;
+    line-height: 1.6;
+  }
+
+  .note-card.pro { border-left: 3px solid #16A34A; }
+  .note-card.con { border-left: 3px solid #DC2626; }
+  .note-card.idea { border-left: 3px solid #0B51AE; }
+
+  /* ── View live link ── */
+  .view-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #0B51AE;
+    text-decoration: none;
+    margin-top: 12px;
+    padding: 6px 12px;
+    border: 1px solid #C7D7ED;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+  }
+
+  .view-live:hover {
+    background: #EFF6FF;
+    border-color: #0B51AE;
+  }
+
+  .view-live svg { width: 14px; height: 14px; }
+
+  /* ── Separator ── */
+  .separator {
+    height: 1px;
+    background: #E5E5E3;
+    margin: 48px 0;
+  }
+
+  /* ── Footer ── */
+  .page-footer {
+    padding: 24px 48px;
+    border-top: 1px solid #E5E5E3;
+    font-size: 11px;
+    color: #8A94A0;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .page-footer strong { color: #1A1A2E; font-weight: 600; }
+
+  /* Scale iframes responsively */
+  @media (max-width: 1300px) {
+    .frame-scaler { max-width: 100%; }
+    .frame-wrapper iframe {
+      transform: scale(calc(100cqw / 1200));
+    }
+    .frame-scaler {
+      container-type: inline-size;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header class="page-header">
+  <img src="logo-full.png" alt="Visualping">
+  <h1>Reports Feature &mdash; Design Concepts</h1>
+  <span class="meta">March 2026 &middot; For design team review</span>
+</header>
+
+<!-- ── Nav ── -->
+<nav class="nav">
+  <a href="#hero" class="active">Before / After (Refined)</a>
+  <a href="#funnel">The Funnel</a>
+  <a href="#convergence">Convergence</a>
+  <a href="#before-after-v1">Before / After (v1)</a>
+</nav>
+
+<!-- ── Content ── -->
+<main class="content">
+
+  <!-- ══ HERO: Refined Before/After ══ -->
+  <section class="concept" id="hero">
+    <div class="concept-header">
+      <div class="concept-number star">&#9733;</div>
+      <div>
+        <div class="concept-title">
+          Before / After (Refined)
+          <span class="concept-badge recommended">Recommended</span>
+        </div>
+        <p class="concept-subtitle">
+          The strongest concept from our exploration, refined based on design review. Tells a clear story: overwhelmed inbox on the left, calm intelligence briefing on the right. Uses a restrained 3-color palette (VP blue, critical red, neutral gray) instead of the original rainbow approach.
+        </p>
+      </div>
+    </div>
+
+    <div class="frame-scaler">
+      <div class="frame-wrapper">
+        <iframe src="hero.html" scrolling="no"></iframe>
+      </div>
+    </div>
+
+    <a href="hero.html" target="_blank" class="view-live">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3v10h10v-3M9 2h5v5M7 9l7-7"/></svg>
+      View full size (1200 &times; 630)
+    </a>
+
+    <div class="design-notes">
+      <div class="note-card pro">
+        <h4>What works</h4>
+        <p>Immediate visual storytelling &mdash; the contrast between chaos and clarity communicates the value prop without reading a word. The restrained color palette feels professional, not "AI-generated."</p>
+      </div>
+      <div class="note-card pro">
+        <h4>Static-first design</h4>
+        <p>Works perfectly as a screenshot, OG image, or blog hero. No dependency on animation for the concept to land. Can be used in presentations, sales decks, and social media as-is.</p>
+      </div>
+      <div class="note-card idea">
+        <h4>Design directions</h4>
+        <p>Consider: (1) Dark-mode left side for stronger chaos feeling, (2) Showing the actual VP report UI on the right instead of a mockup, (3) Using real customer workspace names/data for authenticity.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="separator"></div>
+
+  <!-- ══ CONCEPT 1: The Funnel ══ -->
+  <section class="concept" id="funnel">
+    <div class="concept-header">
+      <div class="concept-number">1</div>
+      <div>
+        <div class="concept-title">
+          The Funnel
+          <span class="concept-badge exploration">Exploration</span>
+        </div>
+        <p class="concept-subtitle">
+          Alert cards on the left flow through animated SVG paths into a consolidated report on the right. Communicates the "many inputs &rarr; one output" idea. Uses 9 category colors &mdash; consider reducing to 3-4 for a less AI-generated feel.
+        </p>
+      </div>
+    </div>
+
+    <div class="frame-scaler">
+      <div class="frame-wrapper">
+        <iframe src="funnel.html" scrolling="no"></iframe>
+      </div>
+    </div>
+
+    <a href="funnel.html" target="_blank" class="view-live">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3v10h10v-3M9 2h5v5M7 9l7-7"/></svg>
+      View full size (1200 &times; 630)
+    </a>
+
+    <div class="design-notes">
+      <div class="note-card pro">
+        <h4>What works</h4>
+        <p>The flowing animation creates a satisfying sense of data being processed. The report document on the right looks like a real deliverable. Strong visual metaphor for the feature's purpose.</p>
+      </div>
+      <div class="note-card con">
+        <h4>Watch out</h4>
+        <p>The 9-color rainbow palette reads as AI-generated. The SVG flow lines lose impact in static screenshots. The left column of uniform cards feels mechanical &mdash; the combined-page variant (scattered cloud) is more organic.</p>
+      </div>
+      <div class="note-card idea">
+        <h4>Design directions</h4>
+        <p>Could work well as an animated GIF or short video for social media. Consider simplifying to fewer alert types and stronger visual contrast between "raw alerts" and "finished report."</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="separator"></div>
+
+  <!-- ══ CONCEPT 2: Convergence ══ -->
+  <section class="concept" id="convergence">
+    <div class="concept-header">
+      <div class="concept-number">2</div>
+      <div>
+        <div class="concept-title">
+          Convergence
+          <span class="concept-badge exploration">Exploration</span>
+        </div>
+        <p class="concept-subtitle">
+          Dark background with source nodes (Pricing, Careers, IR, etc.) arranged in a circle, connected by animated particle trails to a central VP hub. Communicates "all your monitoring in one place." More abstract &mdash; doesn't show the report content itself.
+        </p>
+      </div>
+    </div>
+
+    <div class="frame-scaler">
+      <div class="frame-wrapper">
+        <iframe src="convergence.html" scrolling="no"></iframe>
+      </div>
+    </div>
+
+    <a href="convergence.html" target="_blank" class="view-live">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3v10h10v-3M9 2h5v5M7 9l7-7"/></svg>
+      View full size (1200 &times; 630)
+    </a>
+
+    <div class="design-notes">
+      <div class="note-card pro">
+        <h4>What works</h4>
+        <p>The dark background stands out in a feed or blog. The category breakdown shows the breadth of monitoring use cases. The animated dots create a sense of constant data flow.</p>
+      </div>
+      <div class="note-card con">
+        <h4>Watch out</h4>
+        <p>This is the most "generic SaaS illustration" of the three. Dark mode + glowing hub + radiating nodes is a common AI pattern. Doesn't communicate <em>reports</em> specifically &mdash; could be any aggregation feature.</p>
+      </div>
+      <div class="note-card idea">
+        <h4>Design directions</h4>
+        <p>Could be salvaged by replacing the abstract hub with an actual report document at the center. Or reposition as a "platform overview" image rather than a "reports feature" image.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="separator"></div>
+
+  <!-- ══ CONCEPT 3: Before/After (Original) ══ -->
+  <section class="concept" id="before-after-v1">
+    <div class="concept-header">
+      <div class="concept-number">3</div>
+      <div>
+        <div class="concept-title">
+          Before / After (Original v1)
+          <span class="concept-badge exploration">Exploration</span>
+        </div>
+        <p class="concept-subtitle">
+          The original version that inspired the refined hero. Split-screen with rotated email cards on the left and a clean report on the right. More dramatic with a gradient divider bar and pulsing "+34 more" badge, but also busier and more colorful than the refined version.
+        </p>
+      </div>
+    </div>
+
+    <div class="frame-scaler">
+      <div class="frame-wrapper">
+        <iframe src="before-after-v1.html" scrolling="no"></iframe>
+      </div>
+    </div>
+
+    <a href="before-after-v1.html" target="_blank" class="view-live">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3v10h10v-3M9 2h5v5M7 9l7-7"/></svg>
+      View full size (1200 &times; 630)
+    </a>
+
+    <div class="design-notes">
+      <div class="note-card pro">
+        <h4>What works</h4>
+        <p>The rotated, overlapping email cards create a visceral sense of inbox chaos. The "VS" divider and red "+34 more" badge add urgency. The green checkmark on the right side feels satisfying.</p>
+      </div>
+      <div class="note-card con">
+        <h4>Watch out</h4>
+        <p>The rainbow border-left colors on emails undercut the "chaos" feeling (chaos should look monotonous and overwhelming, not colorful). The gradient divider is heavy-handed. The VS badge is dated.</p>
+      </div>
+      <div class="note-card idea">
+        <h4>How the refined version improved</h4>
+        <p>Swapped rainbow email borders for muted grays. Replaced dramatic divider with a subtle line + arrow. Used inbox-style chrome (count badge) instead of scattered cards. Reduced report content to a focused key insight.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── Footer ── -->
+<footer class="page-footer">
+  <span><strong>Visualping</strong> Reports Design Concepts</span>
+  <span>Created March 2026</span>
+  <span>4 concepts &middot; 1 recommended</span>
+</footer>
+
+<script>
+  // Responsive iframe scaling
+  function scaleIframes() {
+    document.querySelectorAll('.frame-scaler').forEach(scaler => {
+      const containerWidth = scaler.offsetWidth;
+      const iframe = scaler.querySelector('iframe');
+      if (iframe && containerWidth < 1200) {
+        const scale = containerWidth / 1200;
+        iframe.style.transform = `scale(${scale})`;
+        scaler.style.height = `${630 * scale}px`;
+      } else if (iframe) {
+        iframe.style.transform = 'none';
+        scaler.style.height = '630px';
+      }
+    });
+  }
+
+  window.addEventListener('load', scaleIframes);
+  window.addEventListener('resize', scaleIframes);
+
+  // Active nav tracking
+  const navLinks = document.querySelectorAll('.nav a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        const id = entry.target.id;
+        const link = document.querySelector(`.nav a[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3, rootMargin: '-120px 0px -50% 0px' });
+
+  document.querySelectorAll('.concept').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
